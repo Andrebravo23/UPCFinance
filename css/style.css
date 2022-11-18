@@ -1,0 +1,118 @@
+:root {
+    --primary: rgb(115, 87, 219);
+    --gray: rgb(128 ,128 ,128);
+    --light-gray: rgb(208, 208, 208);
+    --subtle-gray: rgb(240, 240, 240);
+}
+
+* {
+    font-family: 'Lato', sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+}
+
+input:focus {
+    outline: none;
+}
+
+#register {
+    display: none;
+}
+
+.flex-body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+header {
+    border-bottom: 1px var(--light-gray) solid;
+    padding: 18px 24px;
+}
+
+header h1 {
+    font-size: 16px;
+    margin: 0;
+}
+
+.login-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.login-card .title {
+    text-align: center;
+    margin: 12px 0;
+}
+
+.login-card .btn {
+    margin: 12px auto;
+}
+
+.custom-input {
+    display: flex;
+    width: 550px;
+    border: 1px var(--light-gray) solid;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 12px 0;
+}
+
+.custom-input i {
+    background: var(--subtle-gray);
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 10px 12px;
+}
+
+.custom-input > div {
+    flex: 1;
+    margin-left: 12px;
+}
+
+.custom-input label {
+    display: block;
+    color: var(--gray);
+    font-size: 12px;
+}
+
+.custom-input input {
+    display: block;
+    border: none;
+    border-color: white;
+    margin-top: 4px;
+    width: 100%;
+    transition: border-color 0.20s linear;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.custom-input input:focus {
+    border-bottom: 1px var(--primary) solid;
+}
+
+.btn {
+    border-radius: 8px;
+    width: fit-content;
+    padding: 12px 18px;
+    cursor: pointer;
+}
+
+.btn-register {
+    background: var(--primary);
+    border: 1px var(--primary) solid;
+    color: white;
+}
+
+.btn-login {
+    background: var(--primary);
+    border: 1px var(--primary) solid;
+    color: white;
+}
