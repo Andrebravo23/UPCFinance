@@ -131,6 +131,7 @@ if (!isset($_SESSION['loggedin'])) {
                         <label for="tasa-leasing">Tasa Nominal Anual</label>
                         <div class="input">
                             <input id="tasa-leasing" name="tasa-leasing" type="text" required>
+                            <i class="bi bi-percent"></i>
                         </div>
                     </div>
                     <div class="text-select">
@@ -159,6 +160,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <label for="ks">Ks</label>
                     <div class="input">
                         <input id="ks" name="ks" type="text" required>
+                        <i class="bi bi-percent"></i>
                     </div>
                 </div>
             </div>
@@ -167,6 +169,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <label for="WACC">Tasa de Descuento W.A.C.C.</label>
                     <div class="input">
                         <input id="WACC" name="WACC" type="text" required>
+                        <i class="bi bi-percent"></i>
                     </div>
                 </div>
             </div>
@@ -204,6 +207,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <label for="IV">Impuesto a la venta</label>
                     <div class="input">
                         <input id="IV" name="IV" type="text" required>
+                        <i class="bi bi-percent"></i>
                     </div>
                 </div>
             </div>
@@ -212,6 +216,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <label for="IR">Impuesto a la renta</label>
                     <div class="input">
                         <input id="IR" name="IR" type="text" required>
+                        <i class="bi bi-percent"></i>
                     </div>
                 </div>
             </div>
