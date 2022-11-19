@@ -105,13 +105,14 @@ function agregarPagoInicial() {
     }
     pagosIniciales.push(newPago);
     let index = pagosIniciales.length - 1;
-    tablePagosIniciales.append(`<tr id="pago-inicial-${index}">
+    tablePagosIniciales.append(`<tr style="display: none;" id="pago-inicial-${index}">
                                     <td>${newPago.monto}</td>
                                     <td>${newPago.concepto}</td>
                                     <td>${newPago.desembolso}</td>
                                     <td><button onclick="eliminarPagoInicial(${index})" type="button" class="btn btn-primary"><i class="bi bi-trash"></i></button></td>
                                 </tr>`);
     console.log(pagosIniciales);
+    $(`#pago-inicial-${index}`).fadeIn('slow');
 
     montoPagoInicial.val('');
     conceptoPagoInicial.val(conceptoPagoInicial.children("option").eq(0).val());
@@ -141,12 +142,13 @@ function agregarPagoPorPeriodo() {
 
     pagosPorPeriodo.push(newPago);
     let index = pagosPorPeriodo.length - 1;
-    tablePagosPeriodo.append(`<tr id="pago-periodo-${index}">
+    tablePagosPeriodo.append(`<tr style="display: none;" id="pago-periodo-${index}">
                                     <td>${newPago.monto}</td>
                                     <td>${newPago.concepto}</td>
                                     <td><button onclick="eliminarPagoPeriodo(${index})" type="button" class="btn btn-primary"><i class="bi bi-trash"></i></button></td>
                                 </tr>`);
 
+    $(`#pago-periodo-${index}`).fadeIn('slow');
     montoPagoPeriodo.val('');
     conceptoPagoPeriodo.val(conceptoPagoPeriodo.children('option').eq(0).val());
     console.log(pagosPorPeriodo);
