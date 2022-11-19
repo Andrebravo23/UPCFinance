@@ -187,5 +187,13 @@ function getDataPayload() {
 $('#leasing-form').on('submit', function(e) {
     e.preventDefault()
     let data = getDataPayload();
-    console.log(data);
+     $.ajax({
+        type: "POST",
+        url: "./API/add-leasing.php",
+        data: data,
+        dataType: "JSON",
+        success: function (response) {
+            console.log(response)            
+        }
+     });
 });

@@ -89,6 +89,7 @@ switch($method) {
                 $configuracion = $stmt->fetch(PDO::FETCH_ASSOC);
                 
                 $_SESSION['tipo_tasa'] = $configuracion['tipo_tasa'];
+                $_SESSION['id_moneda'] = $configuracion['id_moneda'];
                 
                 $sql = "SELECT simbolo FROM moneda WHERE id = '".$configuracion['id_moneda']."'";
                 $stmt = $conn->prepare($sql);
