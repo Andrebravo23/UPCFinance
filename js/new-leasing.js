@@ -11,7 +11,7 @@ function agregarPagoInicial() {
     }
 
     let newPago = {
-        "monto": montoPagoInicial.val(),
+        "monto": parseFloat(montoPagoInicial.val()).toFixed(2),
         "concepto": conceptoPagoInicial.val(),
         "desembolso": desembolsoPagoInicial.val()
     }
@@ -24,6 +24,10 @@ function agregarPagoInicial() {
                                     <td><button onclick="eliminarPagoInicial(${index})" type="button" class="btn btn-primary"><i class="bi bi-trash"></i></button></td>
                                 </tr>`);
     console.log(pagosIniciales);
+
+    montoPagoInicial.val('');
+    conceptoPagoInicial.val(conceptoPagoInicial.children("option").eq(0).val());
+    desembolsoPagoInicial.val(desembolsoPagoInicial.children("option:first").eq(0).val());
 }
 
 function eliminarPagoInicial(index) {
@@ -43,7 +47,7 @@ function agregarPagoPorPeriodo() {
     }
 
     let newPago = {
-        "monto": montoPagoPeriodo.val(),
+        "monto": parseFloat(montoPagoPeriodo.val()).toFixed(2),
         "concepto": conceptoPagoPeriodo.val()
     }
 
@@ -54,6 +58,9 @@ function agregarPagoPorPeriodo() {
                                     <td>${newPago.concepto}</td>
                                     <td><button onclick="eliminarPagoPeriodo(${index})" type="button" class="btn btn-primary"><i class="bi bi-trash"></i></button></td>
                                 </tr>`);
+
+    montoPagoPeriodo.val('');
+    conceptoPagoPeriodo.val(conceptoPagoPeriodo.children('option').eq(0).val());
     console.log(pagosPorPeriodo);
 }
 
