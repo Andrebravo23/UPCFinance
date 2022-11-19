@@ -67,4 +67,6 @@ foreach ($_POST['pagosprevios'] as $pagoprevio) {
     insert('pagoprevio', $pagoprevio);
 }
 
+// CÁLCULOS PARA REGISTRO DE CUOTAS
+
 ?>
