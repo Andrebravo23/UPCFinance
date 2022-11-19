@@ -34,7 +34,7 @@ if (!isset($_SESSION['loggedin'])) {
 
     <div class="container">
         <section class="title">
-            <h2>Dashboard</h2>
+            <h2>Bienvenido, <?= $_SESSION['name'] ?></h2>
             <a class="btn btn-primary" href="registrar-leasing.php">Registrar Nuevo Leasing</a>
         </section>
 

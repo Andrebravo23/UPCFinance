@@ -65,7 +65,7 @@ switch($method) {
             if (password_verify($password, $usuario['contrasena'])) {
                 session_regenerate_id();
                 $_SESSION['loggedin'] = TRUE;
-                $_SESSION['name'] = $_POST['email'];
+                $_SESSION['name'] = $usuario['nombres'];
                 $_SESSION['id'] = $usuario['id'];
                 
                 echo json_encode([
