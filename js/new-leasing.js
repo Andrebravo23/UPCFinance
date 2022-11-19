@@ -1,3 +1,91 @@
+//UTILITARIOS
+function ajustaTipoCambio(moneda, monto) {
+    if (moneda != monedaUsuario) {
+        return monedaUsuario == 'PEN' ? parseFloat(monto) * 3.89 : parseFloat(monto) / 3.89;
+    } else {
+        return parseFloat(monto);
+    }
+}
+
+//VALOR DEL BIEN
+const precioVenta = $('#PV');
+const monedaPrecioVenta = $('#PV-moneda');
+const cuotaInicial = $('#CI');
+const cuotaInicialMedida = $('#CI-medida');
+const opcionCompra = $('#opcion-compra');
+const monedaOpcionCompra = $('#moneda-opcion-compra');
+
+function getDataValorBien() {
+    let PV = ajustaTipoCambio(monedaPrecioVenta.val(), precioVenta.val());
+    let CI = cuotaInicialMedida.val() == 'P' ? PV * parseFloat(cuotaInicial.val()) / 100 : parseFloat(cuotaInicial.val());
+    let OC = ajustaTipoCambio(monedaOpcionCompra.val(), opcionCompra.val());
+
+    return {
+        'precio_venta': PV,
+        'cuota_inicial': CI,
+        'opcion_compra': OC
+    }
+}
+
+//PLAZO DE PAGO
+const numeroPagos = $('#num-pagos');
+const numeroPagosUnidad = $('#num-pagos-unit');
+const frecuenciaPago = $('#frec-pago');
+const fecInicioPrestamo = $('#fecha-inicio-prestamo');
+const fecPrimerPago = $('#fecha-primer-pago');
+
+function getDataPlazoPago() {
+    return {
+        'num_pagos': parseInt(numeroPagos.val()),
+        'unidad': numeroPagosUnidad.val(),
+        'frecuencia': parseInt(frecuenciaPago.val()),
+        'fec_prestamo': fecInicioPrestamo.val(),
+        'fec_primer_pago': fecPrimerPago.val()
+    }
+}
+
+//TASAS
+const tasaLeasing = $('#tasa-leasing');
+const capitalizacion = $('#capitalizacion');
+const diasAnio = $('#dias-anio');
+const ks = $('#ks');
+const wacc = $('#WACC');
+
+function getDataTasa() {
+    return {
+        'tasa': {
+            'tipo_tasa': tipoTasaUsuario,
+            'tasa': parseFloat(tasaLeasing.val()).toFixed(7),
+            'periodo_cap': parseInt(capitalizacion.val()),
+            'dias_anio': parseInt(diasAnio.val())
+        },
+        'tasaleasing': {
+            'ks': parseFloat(ks.val()).toFixed(7),
+            'wacc': parseFloat(wacc.val()).toFixed(7)
+        }
+    }
+}
+
+//PAGOS PORCENTUALES
+const activacion = $('#activacion');
+const activacionUnit = $('#activacion-unit');
+const segRiesgo = $('#seg-riesgo');
+const segRiesgoFrec = $('#seg-riesgo-frec');
+const impuestoVenta = $('#IV');
+const impuestoRenta = $('#IR');
+
+function getDataPagosPorcentuales(CI) {
+    let AC = activacionUnit.val() == 'P' ? CI * parseFloat(activacion.val()) / 100 : parseFloat(activacion.val()); 
+    return {
+        'activacion': parseFloat(AC).toFixed(7),
+        'seguro_riesgo': parseFloat(segRiesgo.val()).toFixed(7),
+        'frec_seguro': parseInt(segRiesgo.val()),
+        'impVenta': parseFloat(impuestoVenta.val()).toFixed(7),
+        'impRenta': parseFloat(impuestoRenta.val()).toFixed(7)
+    };
+}
+
+//PAGOS INICIALES Y POR PERIODOS
 const tablePagosIniciales = $('#pagos-iniciales');
 const montoPagoInicial = $('#monto');
 const conceptoPagoInicial = $('#concepto');

@@ -54,8 +54,8 @@ if (!isset($_SESSION['loggedin'])) {
                     <div class="input">
                         <input id="CI" name="CI" type="text" required>
                         <select name="CI-medida" id="CI-medida">
-                            <option value="porcentaje">%</option>
-                            <option value="efectivo">$</option>
+                            <option value="P">%</option>
+                            <option value="E">$</option>
                         </select>
                     </div>
                 </div>
@@ -79,15 +79,24 @@ if (!isset($_SESSION['loggedin'])) {
                     <div class="input">
                         <input id="num-pagos" name="num-pagos" type="text" required>
                         <select name="num-pagos-unit" id="num-pagos-unit">
-                            <option value="cuotas">CUOTAS</option>
-                            <option value="años">AÑOS</option>
+                            <option value="C">CUOTAS</option>
+                            <option value="A">AÑOS</option>
                         </select>
                     </div>
                 </div>
                 <div class="text-select">
                     <label for="frec-pago">Frecuencia de Pago</label>
                     <div class="input">
-                        <input id="frec-pago" name="frec-pago" type="text" required>
+                        <select class="full" name="frec-pago" id="frec-pago">
+                            <option value="1">DIARIO</option>
+                            <option value="15">QUINCENAL</option>
+                            <option value="30">MENSUAL</option>
+                            <option value="60">BIMESTRAL</option>
+                            <option value="90">TRIMESTRAL</option>
+                            <option value="120">CUATRIMESTRAL</option>
+                            <option value="180">SEMESTRAL</option>
+                            <option value="360">ANUAL</option>
+                        </select>
                     </div>
                 </div>
                 <div class="text-select">
@@ -109,12 +118,37 @@ if (!isset($_SESSION['loggedin'])) {
         <section class="leasing-group">
             <h3>Tasas</h3>
             <div class="inline-input dotted">
-                <div class="text-select">
-                    <label for="TEA">Tasa Efectiva Anual</label>
-                    <div class="input">
-                        <input id="TEA" name="TEA" type="text" required>
+                <?php if ($_SESSION['tipo_tasa'] == 'E'): ?>
+                    <div class="text-select">
+                        <label for="tasa-leasing">Tasa Efectiva Anual</label>
+                        <div class="input">
+                            <input id="tasa-leasing" name="tasa-leasing" type="text" required>
+                        </div>
                     </div>
-                </div>
+                    <input type="hidden" name="capitalizacion" id="capitalizacion" value="">
+                <?php else: ?>
+                    <div class="text-select">
+                        <label for="tasa-leasing">Tasa Nominal Anual</label>
+                        <div class="input">
+                            <input id="tasa-leasing" name="tasa-leasing" type="text" required>
+                        </div>
+                    </div>
+                    <div class="text-select">
+                        <label for="capitalizacion">Periodo de Capitalización</label>
+                        <div class="input">
+                            <select class="full" name="capitalizacion" id="capitalizacion">
+                                <option value="1">DIARIO</option>
+                                <option value="15">QUINCENAL</option>
+                                <option value="30">MENSUAL</option>
+                                <option value="60">BIMESTRAL</option>
+                                <option value="90">TRIMESTRAL</option>
+                                <option value="120">CUATRIMESTRAL</option>
+                                <option value="180">SEMESTRAL</option>
+                                <option value="360">ANUAL</option>
+                            </select>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <div class="text-select">
                     <label for="dias-anio">Días por año</label>
                     <div class="input">
@@ -145,8 +179,8 @@ if (!isset($_SESSION['loggedin'])) {
                     <div class="input">
                         <input id="activacion" name="activacion" type="text" required>
                         <select name="activacion-unit" id="activacion-unit">
-                            <option value="porcentaje">%</option>
-                            <option value="efectivo">$</option>
+                            <option value="P">%</option>
+                            <option value="E">$</option>
                         </select>
                     </div>
                 </div>
@@ -267,6 +301,10 @@ if (!isset($_SESSION['loggedin'])) {
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        var monedaUsuario = '<?= $_SESSION['moneda'] ?>';
+        var tipoTasaUsuario = '<?= $_SESSION['tipo_tasa'] ?>'
+    </script>
     <script src="js/new-leasing.js"></script>
 </body>
 </html>

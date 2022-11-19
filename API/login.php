@@ -19,8 +19,23 @@ switch($method) {
             $lastName = $_POST['last-name'];
             $password = password_hash($_POST['password-register'], 1);
 
-            $sql = "INSERT INTO usuario (nombres, apellidos, correo, contrasena)
-                    VALUES ('$name', '$lastName', '$email', '$password')";
+            $sql = "INSERT INTO configuracion (id_moneda, tipo_tasa)
+                    VALUES (1, 'E')";
+            $stmt = $conn->prepare($sql);
+            $configuration_id = '';
+            try {
+                $result = $stmt->execute();
+                $configuration_id = $conn->lastInsertId();
+            } catch (\Throwable $th) {
+                echo json_encode([
+                    'result' => 0,
+                    'message' => 'Ha habido un error al intentar registrarte'
+                ]);
+                die;
+            }
+
+            $sql = "INSERT INTO usuario (id_configuracion, nombres, apellidos, correo, contrasena)
+                    VALUES ('$configuration_id', '$name', '$lastName', '$email', '$password')";
             $stmt = $conn->prepare($sql);
             try {
                 $result = $stmt->execute();
@@ -67,6 +82,20 @@ switch($method) {
                 $_SESSION['loggedin'] = TRUE;
                 $_SESSION['name'] = $usuario['nombres'];
                 $_SESSION['id'] = $usuario['id'];
+                
+                $sql = "SELECT id_moneda, tipo_tasa FROM configuracion WHERE id = '".$usuario['id_configuracion']."'";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $configuracion = $stmt->fetch(PDO::FETCH_ASSOC);
+                
+                $_SESSION['tipo_tasa'] = $configuracion['tipo_tasa'];
+                
+                $sql = "SELECT simbolo FROM moneda WHERE id = '".$configuracion['id_moneda']."'";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $moneda = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                $_SESSION['moneda'] = $moneda['simbolo'];
                 
                 echo json_encode([
                     'result' => 1,
