@@ -1,5 +1,14 @@
+<?php
+session_start();
+
+if (isset($_SESSION['loggedin'])) {
+	header('Location: dashboard.php');
+	exit;
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,8 +42,8 @@
                     <input type="password" name="password" id="password" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-login">Iniciar Sesión</button>
-            <button type="reset" onclick="toggleRegister()" class="btn btn-login">¿Aún no tienes una cuenta? Regístrate</button>
+            <button type="submit" class="btn btn-primary">Iniciar Sesión</button>
+            <button type="reset" onclick="toggleRegister()" class="btn btn-primary">¿Aún no tienes una cuenta? Regístrate</button>
         </div>
     </form>
 
@@ -78,8 +87,8 @@
                     <input type="password" name="repeat-password" id="repeat-password" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-login">Registrar</button>
-            <button type="reset" onclick="toggleRegister()" class="btn btn-login">¿Ya tienes una cuenta? Inicia sesión</button>
+            <button type="submit" class="btn btn-primary">Registrar</button>
+            <button type="reset" onclick="toggleRegister()" class="btn btn-primary">¿Ya tienes una cuenta? Inicia sesión</button>
         </div>
     </form>
 

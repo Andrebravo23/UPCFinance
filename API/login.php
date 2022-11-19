@@ -72,8 +72,6 @@ switch($method) {
                     'result' => 1,
                     'message' => 'Sesión iniciada'
                 ]);
-
-                header('Location: ../test.php');
             } else {
                 echo json_encode([
                     'result' => 0,

@@ -78,7 +78,7 @@ $('#log-in').on('submit', function(e) {
         success: function (response) {
             response = JSON.parse(response);
             if (response.result == 1) {
-                
+                window.location.href = 'dashboard.php';
             } else {
                 showNots('fail', response.message);
             }
