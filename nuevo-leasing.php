@@ -32,7 +32,7 @@ if (!isset($_SESSION['loggedin'])) {
         </nav>
     </header>
 
-    <div class="container max">
+    <form class="container max">
         <section class="title">
             <h2>Ingrese los datos en los campos</h2>
         </section>
@@ -42,7 +42,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select">
                     <label for="PV">Precio de Venta</label>
                     <div class="input">
-                        <input id="PV" name="PV" type="text">
+                        <input id="PV" name="PV" type="text" required>
                         <select name="PV-moneda" id="PV-moneda">
                             <option value="USD">USD</option>
                             <option value="PEN">PEN</option>
@@ -52,7 +52,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select">
                     <label for="CI">Cuota Inicial</label>
                     <div class="input">
-                        <input id="CI" name="CI" type="text">
+                        <input id="CI" name="CI" type="text" required>
                         <select name="CI-medida" id="CI-medida">
                             <option value="porcentaje">%</option>
                             <option value="efectivo">$</option>
@@ -62,7 +62,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select">
                     <label for="opcion-compra">Opción de Compra</label>
                     <div class="input">
-                        <input id="opcion-compra" name="opcion-compra" type="text">
+                        <input id="opcion-compra" name="opcion-compra" type="text" required>
                         <select name="moneda-opcion-compra" id="moneda-opcion-compra">
                             <option value="USD">USD</option>
                             <option value="PEN">PEN</option>
@@ -77,7 +77,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select">
                     <label for="num-pagos">Número de Pagos</label>
                     <div class="input">
-                        <input id="num-pagos" name="num-pagos" type="text">
+                        <input id="num-pagos" name="num-pagos" type="text" required>
                         <select name="num-pagos-unit" id="num-pagos-unit">
                             <option value="cuotas">CUOTAS</option>
                             <option value="años">AÑOS</option>
@@ -87,13 +87,13 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select">
                     <label for="frec-pago">Frecuencia de Pago</label>
                     <div class="input">
-                        <input id="frec-pago" name="frec-pago" type="text">
+                        <input id="frec-pago" name="frec-pago" type="text" required>
                     </div>
                 </div>
                 <div class="text-select">
                     <label for="fecha-inicio-prestamo">Fecha de Inicio del Préstamo</label>
                     <div class="input">
-                        <input id="fecha-inicio-prestamo" name="fecha-inicio-prestamo" type="date">
+                        <input id="fecha-inicio-prestamo" name="fecha-inicio-prestamo" type="date" required>
                     </div>
                 </div>
             </div>
@@ -101,7 +101,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select third">
                     <label for="fecha-primer-pago">Fecha del Primer Pago</label>
                     <div class="input">
-                        <input id="fecha-primer-pago" name="fecha-primer-pago" type="date">
+                        <input id="fecha-primer-pago" name="fecha-primer-pago" type="date" required>
                     </div>
                 </div>
             </div>
@@ -112,19 +112,19 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select">
                     <label for="TEA">Tasa Efectiva Anual</label>
                     <div class="input">
-                        <input id="TEA" name="TEA" type="text">
+                        <input id="TEA" name="TEA" type="text" required>
                     </div>
                 </div>
                 <div class="text-select">
                     <label for="dias-anio">Días por año</label>
                     <div class="input">
-                        <input id="dias-anio" name="dias-anio" type="text">
+                        <input id="dias-anio" name="dias-anio" type="text" required>
                     </div>
                 </div>
                 <div class="text-select">
                     <label for="ks">Ks</label>
                     <div class="input">
-                        <input id="ks" name="ks" type="text">
+                        <input id="ks" name="ks" type="text" required>
                     </div>
                 </div>
             </div>
@@ -132,7 +132,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select third centered">
                     <label for="WACC">Tasa de Descuento W.A.C.C.</label>
                     <div class="input">
-                        <input id="WACC" name="WACC" type="text">
+                        <input id="WACC" name="WACC" type="text" required>
                     </div>
                 </div>
             </div>
@@ -143,7 +143,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select">
                     <label for="activacion">Activación</label>
                     <div class="input">
-                        <input id="activacion" name="activacion" type="text">
+                        <input id="activacion" name="activacion" type="text" required>
                         <select name="activacion-unit" id="activacion-unit">
                             <option value="porcentaje">%</option>
                             <option value="efectivo">$</option>
@@ -153,7 +153,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select">
                     <label for="seg-riesgo">Seguro de Riesgo</label>
                     <div class="input">
-                        <input id="seg-riesgo" name="seg-riesgo" type="text">
+                        <input id="seg-riesgo" name="seg-riesgo" type="text" required>
                         <select name="seg-riesgo-frec" id="seg-riesgo-frec">
                             <option value="1">DIARIO</option>
                             <option value="15">QUINCENAL</option>
@@ -169,7 +169,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select">
                     <label for="IV">Impuesto a la venta</label>
                     <div class="input">
-                        <input id="IV" name="IV" type="text">
+                        <input id="IV" name="IV" type="text" required>
                     </div>
                 </div>
             </div>
@@ -177,7 +177,7 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="text-select third centered">
                     <label for="IR">Impuesto a la renta</label>
                     <div class="input">
-                        <input id="IR" name="IR" type="text">
+                        <input id="IR" name="IR" type="text" required>
                     </div>
                 </div>
             </div>
@@ -210,15 +210,19 @@ if (!isset($_SESSION['loggedin'])) {
             </div>
             <div class="inline-input dotted">
                 <table>
-                    <tbody>
-                        <tr id="pagos-iniciales">
+                    <thead>
+                        <th>Monto</th>
+                        <th>Concepto</th>
+                        <th>Desembolso</th>
+                        <th></th>
+                    </thead>
+                    <tbody id="pagos-iniciales">
 
-                        </tr>
                     </tbody>
                 </table>
             </div>
             <div class="inline-input dotted btn-container">
-                <button class="btn btn-primary">Agregar Pago Inicial</button>
+                <button onclick="agregarPagoInicial()" type="button" class="btn btn-primary">Agregar Pago Inicial</button>
             </div>
         </section>
         <section class="leasing-group">
@@ -242,24 +246,27 @@ if (!isset($_SESSION['loggedin'])) {
             </div>
             <div class="inline-input dotted">
                 <table>
-                    <tbody>
-                        <tr id="pagos-periodo">
+                    <thead>
+                        <th>Monto</th>
+                        <th>Concepto</th>
+                        <th></th>
+                    </thead>
+                    <tbody id="pagos-periodo">
 
-                        </tr>
                     </tbody>
                 </table>
             </div>
             <div class="inline-input dotted btn-container">
-                <button class="btn btn-primary">Agregar Pago por Periodo</button>
+                <button onclick="agregarPagoPorPeriodo()" type="button" class="btn btn-primary">Agregar Pago por Periodo</button>
             </div>
         </section>
         <div style="margin: 96px 0 24px;" class="btn-container">
             <button class="btn btn-primary">Generar Nuevo Leasing<br>Financiero</button>
         </div>
-    </div>
+    </form>
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="js/dashboard.js"></script>
+    <script src="js/new-leasing.js"></script>
 </body>
 </html>

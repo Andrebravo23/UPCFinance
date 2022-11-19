@@ -124,8 +124,28 @@ header > nav a:last-child {
 .inline-input table {
     flex: 1;
     margin-top: 24px;
-    padding: 12px 24px;
     border: 1px solid var(--light-gray);
+    border-spacing: 0;
+    border-radius: 8px;
+    border-bottom: 8px solid var(--light-gray);
+    font-size: 14px;
+}
+
+.inline-input table th {
+    text-align: start;
+    padding: 16px;
+    border-bottom: 1px solid var(--light-gray);
+    color: var(--gray);
+}
+
+.inline-input table td {
+    padding: 16px;
+    border-bottom: 1px solid var(--light-gray);
+    font-weight: bold;
+}
+
+.inline-input table tr:hover td {
+    background: rgba(0,0,0,0.03);    
 }
 
 .inline-input .text-select.third {
@@ -218,7 +238,12 @@ header > nav a:last-child {
     font-size: 18px;
 }
 
-.custom-input input:focus {
+.inline-input .text-select input {
+    transition: border-color 0.20s linear;
+    border: 1px solid white;
+}
+
+.custom-input input:focus, .inline-input .text-select input:focus {
     border-bottom: 1px var(--primary) solid;
 }
 
