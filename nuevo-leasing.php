@@ -32,7 +32,7 @@ if (!isset($_SESSION['loggedin'])) {
         </nav>
     </header>
 
-    <form class="container max">
+    <form id="leasing-form" class="container max">
         <section class="title">
             <h2>Ingrese los datos en los campos</h2>
         </section>

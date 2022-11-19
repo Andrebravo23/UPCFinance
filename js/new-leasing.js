@@ -157,3 +157,35 @@ function eliminarPagoPeriodo(index) {
     $(`#pago-periodo-${index}`).remove();
     console.log(pagosPorPeriodo);
 }
+
+function getDataPagosPrevios() {
+    pagosIniciales.forEach(pago => {
+        pago.tipo = 'I';
+    })
+    pagosPorPeriodo.forEach(pago => {
+        pago.tipo = 'P';
+        pago.desembolso = 0;
+    })
+    return pagosIniciales.concat(pagosPorPeriodo);
+}
+
+// ENVIAR PAYLOAD AL SERVIDOR
+function getDataPayload() {
+    let valorBien = getDataValorBien();
+    let tasas = getDataTasa();
+    return {
+        'valorbien': getDataValorBien(),
+        'plazopago': getDataPlazoPago(),
+        'tasa': tasas.tasa,
+        'tasaleasing': tasas.tasaleasing,
+        'pagosporcentuales': getDataPagosPorcentuales(valorBien.cuota_inicial),
+        'pagosprevios': getDataPagosPrevios()
+    }
+}
+
+// ENVIAR FORMULARIO AL SERVIDOR
+$('#leasing-form').on('submit', function(e) {
+    e.preventDefault()
+    let data = getDataPayload();
+    console.log(data);
+});
