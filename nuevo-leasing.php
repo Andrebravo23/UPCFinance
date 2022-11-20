@@ -248,8 +248,24 @@ if (!isset($_SESSION['loggedin'])) {
     </form>
 
     <section style="display: none" id="results" class="results-container">
-        <h3>Resultados de la Operación:</h3>
-        <table id="fees-table" class="display">
+        <div class="results-menu">
+            <h3>Resultados de la Operación:</h3>
+            <div class="results-btns">
+                <button onclick="toggleSummary()" id="show-summary" class="btn btn-primary">Resumen</button><!--
+             --><button onclick="toggleSummary()" id="show-table" class="btn btn-primary disabled">Flujo</button>
+            </div>
+        </div>
+
+        <table id="results-summary" class="display">
+            <thead>
+                <th>Descripción</th>
+                <th>Unidad</th>
+                <th>Monto</th>
+            </thead>
+
+        </table>
+
+        <table style="display:none" id="fees-table" class="display">
             <thead>
                 <th>N°</th>
                 <th>TEA</th>

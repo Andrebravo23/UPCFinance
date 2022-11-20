@@ -155,13 +155,15 @@ let results = $('#results');
 let feesTable = $('#fees-table');
 
 leasingForm.on('submit', function(e) {
-    e.preventDefault()
+    e.preventDefault();
+
     let tasas = getDataTasa();
     let prestamo = getDataPrestamo();
     let pagosprevios = getDataPagosPrevios();
     let seguros = getDataSeguros();
     let tasa = tasas.tasa;
     let tasaleasing = tasas.tasaleasing;
+    let summary = [];
 
     let gastos_iniciales = 0;
     let gastos_periodicos = 0;
@@ -197,12 +199,25 @@ leasingForm.on('submit', function(e) {
 
     let allFees = [];
     let saldo_inicial = monto_prestamo;
+    
+    let total_intereses = 0;
+    let total_amortizacion = 0;
+    let total_desgravamen = 0;
+    let total_riesgo = 0;
+    let total_periodicos = 0;
+
     for (let index = 1; index <= total_cuotas; index++) {
         let interes = -saldo_inicial * TEP / 100;
         let seguro_desgravamen = -porcentaje_seguro_desgravamen * saldo_inicial / 100;
         let saldo_final = saldo_inicial + amortizacion;
         let cuota = interes + amortizacion + seguro_desgravamen;
         let flujo = cuota + seguro_riesgo + gastos_periodicos;
+
+        total_intereses += interes;
+        total_amortizacion += amortizacion;
+        total_desgravamen += seguro_desgravamen;
+        total_riesgo += seguro_riesgo;
+        total_periodicos += gastos_periodicos;
 
         let newFee = [
             index,
@@ -228,6 +243,7 @@ leasingForm.on('submit', function(e) {
         "info": false,
         "searching": false,
         "lengthChange": false,
+        "scrollX": true,
         "stripeClasses": [],
         "language": {
             "paginate": {
@@ -250,5 +266,65 @@ leasingForm.on('submit', function(e) {
             }
          ]
     } );
+
+    summary.push([ 'Saldo a financiar', monedaUsuario, parseFloat(saldo_financiar).toFixed(2) ]);
+    summary.push([ 'Monto del préstamo', monedaUsuario, parseFloat(monto_prestamo).toFixed(2) ]);
+    summary.push([ 'Nº Cuotas por Año', '-', parseFloat(cuotas_por_anio).toFixed(2) ]);
+    summary.push([ 'Nº Total de Cuotas', '-', parseFloat(total_cuotas).toFixed(2) ]);
+
+    summary.push([ '% de Seguro desgrav. per.', '%', parseFloat(porcentaje_seguro_desgravamen).toFixed(7) ]);
+    summary.push([ 'Seguro Riesgo', monedaUsuario, parseFloat(-seguro_riesgo).toFixed(2) ]);
     
+    summary.push([ 'Intereses', monedaUsuario, parseFloat(-total_intereses).toFixed(2) ]);
+    summary.push([ 'Amortización del Capital', monedaUsuario, parseFloat(-total_amortizacion).toFixed(2) ]);
+    summary.push([ 'Seguro de desgravamen', monedaUsuario, parseFloat(-total_desgravamen).toFixed(2) ]);
+    summary.push([ 'Seguro contra todo Riesgo', monedaUsuario, parseFloat(-total_riesgo).toFixed(2) ]);
+    summary.push([ 'Pagos Periódicos', monedaUsuario, parseFloat(-total_periodicos).toFixed(2) ]);
+
+    resultsSummary.DataTable( {
+        "data": summary,
+        "info": false,
+        "searching": false,
+        "lengthChange": false,
+        "ordering": false,
+        "paging": false,
+        "scrollX": true,
+        "stripeClasses": [],
+        "columnDefs": [/* 
+            { 
+                targets: [ 4, 5, 6, 7, 8, 9, 11 ],
+                render: function(data, type, row) {
+                    return `<span class="negative">${data}</span>`;
+                }
+            },
+            {
+                targets: [10],
+                render: function(data, type, row) {
+                    return `<span class="positive">${data}</span>`;
+                }
+            } */
+         ]
+    } );
 })
+
+// RESULTADOS ***********************************************************************************************
+let resultSelected = 0;
+let showSummaryBtn = $('#show-summary');
+let showTableBtn = $('#show-table');
+let resultsSummary = $('#results-summary');
+
+function toggleSummary() {
+    showSummaryBtn.toggleClass('disabled');
+    showTableBtn.toggleClass('disabled');
+    if (resultSelected == 0) {
+        resultsSummary.fadeOut('fast', function(){
+            feesTable.fadeIn('fast');
+            resultSelected = 1;
+        })
+    } else {
+        feesTable.fadeOut('fast', function(){
+            resultsSummary.fadeIn('fast');
+            resultSelected = 0;
+        })
+    }
+}
