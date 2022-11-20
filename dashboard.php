@@ -25,8 +25,8 @@ if (!isset($_SESSION['loggedin'])) {
     <header>
         <h1>UPC Finance</h1>
         <nav>
-            <a class="active" href="">Dashboard</a><!--
-         --><a href="">Pagos</a><!--
+            <a class="active" href="#">Dashboard</a><!--
+         --><a href="nuevo-leasing.php">Nuevo Leasing</a><!--
          --><a href="">Configuración</a><!--
          --><a href="API/login.php?action=logout"><i class="bi bi-power"></i></a>
         </nav>

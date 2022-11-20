@@ -25,8 +25,8 @@ if (!isset($_SESSION['loggedin'])) {
     <header>
         <h1>UPC Finance</h1>
         <nav>
-            <a class="active" href="dashboard.php">Dashboard</a><!--
-         --><a href="">Pagos</a><!--
+            <a href="dashboard.php">Dashboard</a><!--
+         --><a class="active" href="#">Nuevo Leasing</a><!--
          --><a href="">Configuración</a><!--
          --><a href="API/login.php?action=logout"><i class="bi bi-power"></i></a>
         </nav>
@@ -45,8 +45,8 @@ if (!isset($_SESSION['loggedin'])) {
                     <div class="input">
                         <input id="PV" name="PV" type="text" required>
                         <select name="PV-moneda" id="PV-moneda">
-                            <option value="USD">USD</option>
-                            <option value="PEN">PEN</option>
+                            <option value="USD" <?php if ($_SESSION['moneda'] == 'USD') echo 'selected'; ?>>USD</option>
+                            <option value="PEN" <?php if ($_SESSION['moneda'] == 'PEN') echo 'selected'; ?> >PEN</option>
                         </select>
                     </div>
                 </div>
