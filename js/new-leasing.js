@@ -1,4 +1,4 @@
-//UTILITARIOS
+// UTILITARIOS ***********************************************************************************************
 function ajustaTipoCambio(moneda, monto) {
     if (moneda != monedaUsuario) {
         return monedaUsuario == 'PEN' ? parseFloat(monto) * 3.89 : parseFloat(monto) / 3.89;
@@ -7,85 +7,31 @@ function ajustaTipoCambio(moneda, monto) {
     }
 }
 
-//VALOR DEL BIEN
+// DATOS DEL PRÉSTAMO ***************************************************************************************
 const precioVenta = $('#PV');
 const monedaPrecioVenta = $('#PV-moneda');
 const cuotaInicial = $('#CI');
 const cuotaInicialMedida = $('#CI-medida');
-const opcionCompra = $('#opcion-compra');
-const monedaOpcionCompra = $('#moneda-opcion-compra');
+const numeroPagos = $('#num-pagos');
+const numeroPagosUnidad = $('#num-pagos-unit');
+const frecuenciaPago = $('#frec-pago');
+const diasAnio = $('#dias-anio');
 
-function getDataValorBien() {
+function getDataPrestamo() {
     let PV = ajustaTipoCambio(monedaPrecioVenta.val(), precioVenta.val());
     let CI = cuotaInicialMedida.val() == 'P' ? PV * parseFloat(cuotaInicial.val()) / 100 : parseFloat(cuotaInicial.val());
-    let OC = ajustaTipoCambio(monedaOpcionCompra.val(), opcionCompra.val());
 
     return {
         'precio_venta': PV,
         'cuota_inicial': CI,
-        'opcion_compra': OC
-    }
-}
-
-//PLAZO DE PAGO
-const numeroPagos = $('#num-pagos');
-const numeroPagosUnidad = $('#num-pagos-unit');
-const frecuenciaPago = $('#frec-pago');
-const fecInicioPrestamo = $('#fecha-inicio-prestamo');
-const fecPrimerPago = $('#fecha-primer-pago');
-
-function getDataPlazoPago() {
-    return {
         'num_pagos': parseInt(numeroPagos.val()),
         'unidad': numeroPagosUnidad.val(),
         'frecuencia': parseInt(frecuenciaPago.val()),
-        'fec_prestamo': fecInicioPrestamo.val(),
-        'fec_primer_pago': fecPrimerPago.val()
+        'dias_anio': parseInt(diasAnio.val())
     }
 }
 
-//TASAS
-const tasaLeasing = $('#tasa-leasing');
-const capitalizacion = $('#capitalizacion');
-const diasAnio = $('#dias-anio');
-const ks = $('#ks');
-const wacc = $('#WACC');
-
-function getDataTasa() {
-    return {
-        'tasa': {
-            'tipo_tasa': tipoTasaUsuario,
-            'tasa': parseFloat(tasaLeasing.val()).toFixed(7),
-            'periodo_cap': parseInt(capitalizacion.val()),
-            'dias_anio': parseInt(diasAnio.val())
-        },
-        'tasaleasing': {
-            'ks': parseFloat(ks.val()).toFixed(7),
-            'wacc': parseFloat(wacc.val()).toFixed(7)
-        }
-    }
-}
-
-//PAGOS PORCENTUALES
-const activacion = $('#activacion');
-const activacionUnit = $('#activacion-unit');
-const segRiesgo = $('#seg-riesgo');
-const segRiesgoFrec = $('#seg-riesgo-frec');
-const impuestoVenta = $('#IV');
-const impuestoRenta = $('#IR');
-
-function getDataPagosPorcentuales(CI) {
-    let AC = activacionUnit.val() == 'P' ? CI * parseFloat(activacion.val()) / 100 : parseFloat(activacion.val()); 
-    return {
-        'activacion': parseFloat(AC).toFixed(7),
-        'seguro_riesgo': parseFloat(segRiesgo.val()).toFixed(7),
-        'frec_seguro': parseInt(segRiesgoFrec.val()),
-        'impVenta': parseFloat(impuestoVenta.val()).toFixed(7),
-        'impRenta': parseFloat(impuestoRenta.val()).toFixed(7)
-    };
-}
-
-//PAGOS INICIALES Y POR PERIODOS
+// DATOS DE LOS PAGOS INICIALES *****************************************************************************
 const tablePagosIniciales = $('#pagos-iniciales');
 const montoPagoInicial = $('#monto');
 const conceptoPagoInicial = $('#concepto');
@@ -125,6 +71,7 @@ function eliminarPagoInicial(index) {
     console.log(pagosIniciales);
 }
 
+// DATOS DE LOS PAGOS POR PERIODO ****************************************************************************
 const tablePagosPeriodo = $('#pagos-periodo');
 const montoPagoPeriodo = $('#monto-por-periodo');
 const conceptoPagoPeriodo = $('#concepto-por-periodo');
@@ -160,6 +107,7 @@ function eliminarPagoPeriodo(index) {
     console.log(pagosPorPeriodo);
 }
 
+// DATOS DE LOS PAGOS (INICIALES Y PERIODICOS) **************************************************************
 function getDataPagosPrevios() {
     pagosIniciales.forEach(pago => {
         pago.tipo = 'I';
@@ -171,31 +119,106 @@ function getDataPagosPrevios() {
     return pagosIniciales.concat(pagosPorPeriodo);
 }
 
-// ENVIAR PAYLOAD AL SERVIDOR
-function getDataPayload() {
-    let valorBien = getDataValorBien();
-    let tasas = getDataTasa();
+// DATOS DE LOS SEGUROS *************************************************************************************
+const segDesgravamen = $('#seg-desgravamen');
+const segRiesgo = $('#seg-riesgo');
+
+function getDataSeguros() {
     return {
-        'valorbien': getDataValorBien(),
-        'plazopago': getDataPlazoPago(),
-        'tasa': tasas.tasa,
-        'tasaleasing': tasas.tasaleasing,
-        'pagosporcentuales': getDataPagosPorcentuales(valorBien.cuota_inicial),
-        'pagosprevios': getDataPagosPrevios()
+        'seguro_desgravamen': parseFloat(segDesgravamen.val()).toFixed(7),
+        'seguro_riesgo': parseFloat(segRiesgo.val()).toFixed(7)
+    };
+}
+
+// DATOS DE LAS TASAS ***************************************************************************************
+const tasaLeasing = $('#tasa-leasing');
+const capitalizacion = $('#capitalizacion');
+const wacc = $('#wacc');
+
+function getDataTasa() {
+    return {
+        'tasa': {
+            'tipo_tasa': tipoTasaUsuario,
+            'tasa': parseFloat(tasaLeasing.val()).toFixed(7),
+            'periodo_cap': parseInt(capitalizacion.val())
+        },
+        'tasaleasing': {
+            'wacc': parseFloat(wacc.val()).toFixed(7)
+        }
     }
 }
 
-// ENVIAR FORMULARIO AL SERVIDOR
-$('#leasing-form').on('submit', function(e) {
+// CÁLCULOS *************************************************************************************************
+
+let leasingForm = $('#leasing-form');
+let results = $('#results');
+let feesTable = $('#fees-table');
+
+leasingForm.on('submit', function(e) {
     e.preventDefault()
-    let data = getDataPayload();
-     $.ajax({
-        type: "POST",
-        url: "./API/add-leasing.php",
-        data: data,
-        dataType: "JSON",
-        success: function (response) {
-            console.log(response)            
+    let tasas = getDataTasa();
+    let prestamo = getDataPrestamo();
+    let pagosprevios = getDataPagosPrevios();
+    let seguros = getDataSeguros();
+    let tasa = tasas.tasa;
+    let tasaleasing = tasas.tasaleasing;
+
+    let gastos_iniciales = 0;
+    let gastos_periodicos = 0;
+    pagosprevios.forEach(pago => {
+        if (pago.tipo == 'I') {
+            gastos_iniciales += parseFloat(pago.monto);
+        } else {
+            gastos_periodicos -= parseFloat(pago.monto);
         }
-     });
-});
+    });
+
+    let saldo_financiar = prestamo['precio_venta'] - prestamo['cuota_inicial'];
+    let monto_prestamo = saldo_financiar + gastos_iniciales;
+    let cuotas_por_anio = prestamo['dias_anio'] / prestamo['frecuencia'];
+    let total_cuotas = prestamo['unidad'] == 'A' ? prestamo['num_pagos'] * cuotas_por_anio : prestamo['num_pagos'];
+    let porcentaje_seguro_desgravamen = seguros['seguro_desgravamen'] * prestamo['frecuencia'] / 30;
+    let seguro_riesgo = -seguros['seguro_riesgo'] * prestamo['precio_venta'] / (cuotas_por_anio * 100);
+    let amortizacion = -monto_prestamo / total_cuotas;
+
+    let TEA = 0;
+    if (tasa['tipo_tasa'] == 'E') {
+        TEA = parseFloat(tasa['tasa']).toFixed(7);
+    } else {
+        let n = 360 / tasa['periodo_cap'];
+        TEA = parseFloat(100 * (Math.pow(1 + tasa['tasa'] / (100 * n), n) - 1)).toFixed(7);
+    }
+
+    let TEP = parseFloat((Math.pow(1 + TEA / 100, prestamo['frecuencia'] / prestamo['dias_anio']) - 1) * 100).toFixed(7);
+
+    leasingForm.fadeOut('fast', function() {
+        results.fadeIn('fast');
+    });
+
+    let saldo_inicial = monto_prestamo;
+    for (let index = 1; index <= total_cuotas; index++) {
+        let interes = -saldo_inicial * TEP / 100;
+        let seguro_desgravamen = -porcentaje_seguro_desgravamen * saldo_inicial / 100;
+        let saldo_final = saldo_inicial + amortizacion;
+        let cuota = interes + amortizacion + seguro_desgravamen;
+        let flujo = cuota + seguro_desgravamen + seguro_riesgo + gastos_periodicos;
+        feesTable.append(
+                        `<tr>
+                            <td>${index}</td>
+                            <td>${TEA}%</td>
+                            <td>${TEP}%</td>
+                            <td>${saldo_inicial.toFixed(2)}</td>
+                            <td>${interes.toFixed(2)}</td>
+                            <td>${cuota.toFixed(2)}</td>
+                            <td>${amortizacion.toFixed(2)}</td>
+                            <td>${seguro_desgravamen.toFixed(2)}</td>
+                            <td>${seguro_riesgo.toFixed(2)}</td>
+                            <td>${gastos_periodicos.toFixed(2)}</td>
+                            <td>${saldo_final.toFixed(2)}</td>
+                            <td>${flujo.toFixed(2)}</td>
+                        </tr>`);
+        saldo_inicial = saldo_final;
+    }
+    console.log(result);
+    
+})

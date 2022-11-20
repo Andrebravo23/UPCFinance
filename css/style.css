@@ -148,16 +148,9 @@ header > nav a:last-child {
     background: rgba(0,0,0,0.03);    
 }
 
-.inline-input .text-select.third {
-    flex: none;
-    width: 33.34%;
+.inline-input.breath .text-select {
     margin-right: 12px;
     margin-top: 24px;
-}
-
-.inline-input .text-select.third.centered {
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .inline-input .text-select {

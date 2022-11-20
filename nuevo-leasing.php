@@ -36,8 +36,9 @@ if (!isset($_SESSION['loggedin'])) {
         <section class="title">
             <h2>Ingrese los datos en los campos</h2>
         </section>
+        <!-- DATOS DEL PRESTAMO -->
         <section class="leasing-group">
-            <h3>Datos del valor del bien</h3>
+            <h3>Datos del préstamo</h3>
             <div class="inline-input dotted">
                 <div class="text-select">
                     <label for="PV">Precio de Venta</label>
@@ -59,21 +60,8 @@ if (!isset($_SESSION['loggedin'])) {
                         </select>
                     </div>
                 </div>
-                <div class="text-select">
-                    <label for="opcion-compra">Opción de Compra</label>
-                    <div class="input">
-                        <input id="opcion-compra" name="opcion-compra" type="text" required>
-                        <select name="moneda-opcion-compra" id="moneda-opcion-compra">
-                            <option value="USD">USD</option>
-                            <option value="PEN">PEN</option>
-                        </select>
-                    </div>
-                </div>
             </div>
-        </section>
-        <section class="leasing-group">
-            <h3>Plazo de pago</h3>
-            <div class="inline-input dotted">
+            <div class="inline-input dotted breath">
                 <div class="text-select">
                     <label for="num-pagos">Número de Pagos</label>
                     <div class="input">
@@ -100,131 +88,16 @@ if (!isset($_SESSION['loggedin'])) {
                     </div>
                 </div>
                 <div class="text-select">
-                    <label for="fecha-inicio-prestamo">Fecha de Inicio del Préstamo</label>
-                    <div class="input">
-                        <input id="fecha-inicio-prestamo" name="fecha-inicio-prestamo" type="date" required>
-                    </div>
-                </div>
-            </div>
-            <div class="inline-input dotted">
-                <div class="text-select third">
-                    <label for="fecha-primer-pago">Fecha del Primer Pago</label>
-                    <div class="input">
-                        <input id="fecha-primer-pago" name="fecha-primer-pago" type="date" required>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="leasing-group">
-            <h3>Tasas</h3>
-            <div class="inline-input dotted">
-                <?php if ($_SESSION['tipo_tasa'] == 'E'): ?>
-                    <div class="text-select">
-                        <label for="tasa-leasing">Tasa Efectiva Anual</label>
-                        <div class="input">
-                            <input id="tasa-leasing" name="tasa-leasing" type="text" required>
-                            <i class="bi bi-percent"></i>
-                        </div>
-                    </div>
-                    <input type="hidden" name="capitalizacion" id="capitalizacion" value="">
-                <?php else: ?>
-                    <div class="text-select">
-                        <label for="tasa-leasing">Tasa Nominal Anual</label>
-                        <div class="input">
-                            <input id="tasa-leasing" name="tasa-leasing" type="text" required>
-                            <i class="bi bi-percent"></i>
-                        </div>
-                    </div>
-                    <div class="text-select">
-                        <label for="capitalizacion">Periodo de Capitalización</label>
-                        <div class="input">
-                            <select class="full" name="capitalizacion" id="capitalizacion">
-                                <option value="1">DIARIO</option>
-                                <option value="15">QUINCENAL</option>
-                                <option value="30">MENSUAL</option>
-                                <option value="60">BIMESTRAL</option>
-                                <option value="90">TRIMESTRAL</option>
-                                <option value="120">CUATRIMESTRAL</option>
-                                <option value="180">SEMESTRAL</option>
-                                <option value="360">ANUAL</option>
-                            </select>
-                        </div>
-                    </div>
-                <?php endif; ?>
-                <div class="text-select">
                     <label for="dias-anio">Días por año</label>
                     <div class="input">
                         <input id="dias-anio" name="dias-anio" type="text" required>
                     </div>
                 </div>
-                <div class="text-select">
-                    <label for="ks">Ks</label>
-                    <div class="input">
-                        <input id="ks" name="ks" type="text" required>
-                        <i class="bi bi-percent"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="inline-input dotted">
-                <div class="text-select third centered">
-                    <label for="WACC">Tasa de Descuento W.A.C.C.</label>
-                    <div class="input">
-                        <input id="WACC" name="WACC" type="text" required>
-                        <i class="bi bi-percent"></i>
-                    </div>
-                </div>
             </div>
         </section>
+        <!-- DATOS DE PAGOS INICIALES -->
         <section class="leasing-group">
-            <h3>Pagos Porcentuales</h3>
-            <div class="inline-input dotted">
-                <div class="text-select">
-                    <label for="activacion">Activación</label>
-                    <div class="input">
-                        <input id="activacion" name="activacion" type="text" required>
-                        <select name="activacion-unit" id="activacion-unit">
-                            <option value="P">%</option>
-                            <option value="E">$</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="text-select">
-                    <label for="seg-riesgo">Seguro de Riesgo</label>
-                    <div class="input">
-                        <input id="seg-riesgo" name="seg-riesgo" type="text" required>
-                        <i class="bi bi-percent"></i>
-                        <select name="seg-riesgo-frec" id="seg-riesgo-frec">
-                            <option value="1">DIARIO</option>
-                            <option value="15">QUINCENAL</option>
-                            <option value="30">MENSUAL</option>
-                            <option value="60">BIMESTRAL</option>
-                            <option value="90">TRIMESTRAL</option>
-                            <option value="120">CUATRIMESTRAL</option>
-                            <option value="180">SEMESTRAL</option>
-                            <option value="360">ANUAL</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="text-select">
-                    <label for="IV">Impuesto a la venta</label>
-                    <div class="input">
-                        <input id="IV" name="IV" type="text" required>
-                        <i class="bi bi-percent"></i>
-                    </div>
-                </div>
-            </div>
-            <div class="inline-input dotted">
-                <div class="text-select third centered">
-                    <label for="IR">Impuesto a la renta</label>
-                    <div class="input">
-                        <input id="IR" name="IR" type="text" required>
-                        <i class="bi bi-percent"></i>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="leasing-group">
-            <h3>Pagos Iniciales</h3>
+            <h3>Datos de los Pagos Iniciales</h3>
             <div class="inline-input dotted">
                 <div class="text-select">
                     <label for="monto">Monto y Concepto</label>
@@ -266,8 +139,9 @@ if (!isset($_SESSION['loggedin'])) {
                 <button onclick="agregarPagoInicial()" type="button" class="btn btn-primary">Agregar Pago Inicial</button>
             </div>
         </section>
+        <!-- DATOS DE LOS PAGOS POR PERIODO -->
         <section class="leasing-group">
-            <h3>Pagos por Periodo</h3>
+            <h3>Datos de los Pagos por Periodo</h3>
             <div class="inline-input dotted">
                 <div class="text-select">
                     <label for="monto-por-periodo">Monto y Concepto</label>
@@ -301,10 +175,105 @@ if (!isset($_SESSION['loggedin'])) {
                 <button onclick="agregarPagoPorPeriodo()" type="button" class="btn btn-primary">Agregar Pago por Periodo</button>
             </div>
         </section>
+        <!-- DATOS DE LOS SEGUROS -->
+        <section class="leasing-group">
+            <h3>Datos de los Seguros</h3>
+            <div class="inline-input dotted">
+                <div class="text-select">
+                    <label for="seg-desgravamen">Seguro de Desgravamen</label>
+                    <div class="input">
+                        <input id="seg-desgravamen" name="seg-desgravamen" type="text" required>
+                        <i class="bi bi-percent"></i>
+                    </div>
+                </div>
+                <div class="text-select">
+                    <label for="seg-riesgo">Seguro de Riesgo</label>
+                    <div class="input">
+                        <input id="seg-riesgo" name="seg-riesgo" type="text" required>
+                        <i class="bi bi-percent"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- DATOS DE LAS TASAS -->
+        <section class="leasing-group">
+            <h3>Datos de las Tasas</h3>
+            <div class="inline-input dotted">
+                <?php if ($_SESSION['tipo_tasa'] == 'E'): ?>
+                    <div class="text-select">
+                        <label for="tasa-leasing">Tasa Efectiva Anual</label>
+                        <div class="input">
+                            <input id="tasa-leasing" name="tasa-leasing" type="text" required>
+                            <i class="bi bi-percent"></i>
+                        </div>
+                    </div>
+                    <input type="hidden" name="capitalizacion" id="capitalizacion" value="">
+                <?php else: ?>
+                    <div class="text-select">
+                        <label for="tasa-leasing">Tasa Nominal Anual</label>
+                        <div class="input">
+                            <input id="tasa-leasing" name="tasa-leasing" type="text" required>
+                            <i class="bi bi-percent"></i>
+                        </div>
+                    </div>
+                    <div class="text-select">
+                        <label for="capitalizacion">Periodo de Capitalización</label>
+                        <div class="input">
+                            <select class="full" name="capitalizacion" id="capitalizacion">
+                                <option value="1">DIARIO</option>
+                                <option value="15">QUINCENAL</option>
+                                <option value="30">MENSUAL</option>
+                                <option value="60">BIMESTRAL</option>
+                                <option value="90">TRIMESTRAL</option>
+                                <option value="120">CUATRIMESTRAL</option>
+                                <option value="180">SEMESTRAL</option>
+                                <option value="360">ANUAL</option>
+                            </select>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <div class="text-select">
+                    <label for="wacc">Tasa de Descuento</label>
+                    <div class="input">
+                        <input id="wacc" name="wacc" type="text" required>
+                        <i class="bi bi-percent"></i>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
         <div style="margin: 96px 0 24px;" class="btn-container">
             <button class="btn btn-primary">Generar Nuevo Leasing<br>Financiero</button>
         </div>
     </form>
+
+    <section style="display: none;" id="results" class="container max">
+        <div class="leasing-group">
+            <h3>Resultados</h3>
+            <div class="inline-input">
+                <table>
+                    <thead>
+                        <th>N°</th>
+                        <th>TEA</th>
+                        <th>TEP</th>
+                        <th>Saldo Inicial</th>
+                        <th>Interés</th>
+                        <th>Cuota</th>
+                        <th>Amortización</th>
+                        <th>Seg. Desgravamen</th>
+                        <th>Seg. Riesgo</th>
+                        <th>Gastos Periódicos</th>
+                        <th>Saldo Final</th>
+                        <th>Flujo</th>
+                    </thead>
+                    <tbody id="fees-table">
+                    
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
