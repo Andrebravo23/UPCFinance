@@ -27,10 +27,18 @@ function insert($conn, $tablename, $data)
     $columns = implode(', ', $columns);
     $values = implode(', ', $values);
     
-    $sql = "INSERT INTO $tablename ($columns) VALUES ($values);";
-    $stmt = $conn->prepare($sql);
-    $result = $stmt->execute();
-    return $conn->lastInsertId();
+    try {
+        $sql = "INSERT INTO $tablename ($columns) VALUES ($values);";
+        $stmt = $conn->prepare($sql);
+        $result = $stmt->execute();
+        return $conn->lastInsertId();
+    } catch (\Throwable $th) {
+        echo json_encode([
+            'success' => 0,
+            'message' => 'Ocurrió un error al registrar la operación'
+        ]);
+        die;
+    }
 }
 
 // REGISTRA PRESTAMO

@@ -441,7 +441,14 @@ function guardarOperacion() {
         data: getAllData(),
         dataType: "json",
         success: function (response) {
-            console.log(response);
+            if (response.success) {
+                window.location.href = './dashboard.php';
+            } else {
+                showNots('fail', response.message);
+            }
+        },
+        error: function(e) {
+            showNots('fail', 'Ha ocurrido un error');
         }
     });
 }

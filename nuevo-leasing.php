@@ -282,6 +282,10 @@ if (!isset($_SESSION['loggedin'])) {
         </div>
     </section>
 
+    <div style="display: none;" id="nots" class="">
+        <i class=""></i>
+        <span></span>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
@@ -289,6 +293,7 @@ if (!isset($_SESSION['loggedin'])) {
         var monedaUsuario = '<?= $_SESSION['moneda'] ?>';
         var tipoTasaUsuario = '<?= $_SESSION['tipo_tasa'] ?>';
     </script>
+    <script src="js/hb-simple-nots.js"></script>
     <script src="js/new-leasing.js"></script>
 </body>
 </html>

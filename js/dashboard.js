@@ -1,19 +1,32 @@
-var data = [
-    [
-        "s",
-        "S",
-        "S",
-        "S",
-        "S",
-        "S",
-        "S",
-        "S"
-    ]
-];
+let summaries;
 
-$(document).ready( function () {
+$.ajax({
+    type: "GET",
+    url: "./API/get-summaries.php",
+    success: function (response) {
+        summaries = JSON.parse(response);
+        console.log(response);
+        loadTable();
+    },
+    error: function(e) {
+        showNots('fail', 'Ha ocurrido un error');
+    }
+});
+
+function loadTable() {
     $('#example').DataTable( {
-        "data": data,
+        "data": summaries,
+        dataType: 'json',
+        "columns": [
+            { data: 'id' },
+            { data: 'saldo_financiar' },
+            { data: 'monto_prestamo' },
+            { data: 'cuotas_total' },
+            { data: 'tasa_descuento' },
+            { data: 'tir' },
+            { data: 'tcea' },
+            { data: 'van' }
+        ],
         "info": false,
         "searching": false,
         "lengthChange": false,
@@ -40,4 +53,4 @@ $(document).ready( function () {
             }
          ]
     } );
-})
+};
