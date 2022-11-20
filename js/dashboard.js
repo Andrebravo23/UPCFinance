@@ -14,7 +14,7 @@ $.ajax({
 });
 
 function loadTable() {
-    $('#example').DataTable( {
+    $('#summaries').DataTable( {
         "data": summaries,
         dataType: 'json',
         "columns": [

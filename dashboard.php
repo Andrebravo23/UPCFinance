@@ -39,7 +39,7 @@ if (!isset($_SESSION['loggedin'])) {
             <a class="btn btn-primary" href="nuevo-leasing.php">Registrar Nuevo Leasing</a>
         </section>
 
-        <table id="example" class="display">
+        <table id="summaries" class="display">
             <thead>
                 <tr>
                     <th>#</th>
