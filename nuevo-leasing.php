@@ -27,7 +27,7 @@ if (!isset($_SESSION['loggedin'])) {
         <nav>
             <a href="dashboard.php">Dashboard</a><!--
          --><a class="active" href="#">Nuevo Leasing</a><!--
-         --><a href="">Configuración</a><!--
+         --><a href="configuracion.php">Configuración</a><!--
          --><a href="API/login.php?action=logout"><i class="bi bi-power"></i></a>
         </nav>
     </header>
@@ -277,7 +277,7 @@ if (!isset($_SESSION['loggedin'])) {
             </table>
         </div>
 
-        <div style="margin: 96px 0 24px;" class="btn-container">
+        <div style="margin: 64px 0 24px;" class="btn-container">
             <button onclick="guardarOperacion()" class="btn btn-primary">Registrar Operación</button>
         </div>
     </section>

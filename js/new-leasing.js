@@ -260,8 +260,8 @@ leasingForm.on('submit', function(e) {
  
     summary.push([ 'Saldo a financiar', monedaUsuario, parseFloat(saldo_financiar).toFixed(2) ]);
     summary.push([ 'Monto del préstamo', monedaUsuario, parseFloat(monto_prestamo).toFixed(2) ]);
-    summary.push([ 'Nº Cuotas por Año', '-', parseFloat(cuotas_por_anio).toFixed(2) ]);
-    summary.push([ 'Nº Total de Cuotas', '-', parseFloat(cuotas_total).toFixed(2) ]);
+    summary.push([ 'Nº Cuotas por Año', '-', parseInt(cuotas_por_anio) ]);
+    summary.push([ 'Nº Total de Cuotas', '-', parseInt(cuotas_total) ]);
     summary.push([ '% de Seguro desgrav. per.', '%', parseFloat(porcentaje_seguro_desgravamen).toFixed(7) ]);
     summary.push([ 'Seguro contra todo Riesgo', monedaUsuario, parseFloat(-seguro_riesgo).toFixed(2) ]);
 
@@ -441,7 +441,7 @@ function guardarOperacion() {
         data: getAllData(),
         dataType: "json",
         success: function (response) {
-            if (response.success) {
+            if (response.result) {
                 window.location.href = './dashboard.php';
             } else {
                 showNots('fail', response.message);

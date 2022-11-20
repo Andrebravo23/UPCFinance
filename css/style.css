@@ -220,7 +220,7 @@ header > nav a:last-child {
     font-size: 12px;
 }
 
-.custom-input input {
+.custom-input input, .custom-input select {
     display: block;
     border: none;
     border-color: white;
@@ -392,7 +392,7 @@ table.dataTable.no-footer {
     border-top-left-radius: 0;
 }
 
-.results-btns .btn-primary.disabled {
+.btn-primary.disabled, .btn-primary:disabled {
     background: var(--light-gray);
     border: 1px solid var(--light-gray);
     color: gray;

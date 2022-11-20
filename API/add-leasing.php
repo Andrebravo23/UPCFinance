@@ -34,7 +34,7 @@ function insert($conn, $tablename, $data)
         return $conn->lastInsertId();
     } catch (\Throwable $th) {
         echo json_encode([
-            'success' => 0,
+            'result' => 0,
             'message' => 'Ocurrió un error al registrar la operación'
         ]);
         die;

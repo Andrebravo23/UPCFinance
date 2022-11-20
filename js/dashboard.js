@@ -5,7 +5,6 @@ $.ajax({
     url: "./API/get-summaries.php",
     success: function (response) {
         summaries = JSON.parse(response);
-        console.log(response);
         loadTable();
     },
     error: function(e) {

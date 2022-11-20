@@ -80,7 +80,9 @@ switch($method) {
             if (password_verify($password, $usuario['contrasena'])) {
                 session_regenerate_id();
                 $_SESSION['loggedin'] = TRUE;
-                $_SESSION['name'] = $usuario['nombres'];
+                $_SESSION['correo'] = $usuario['correo'];
+                $_SESSION['nombre'] = $usuario['nombres'];
+                $_SESSION['apellido'] = $usuario['apellidos'];
                 $_SESSION['id'] = $usuario['id'];
                 
                 $sql = "SELECT id_moneda, tipo_tasa FROM configuracion WHERE id = '".$usuario['id_configuracion']."'";

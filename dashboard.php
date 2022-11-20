@@ -28,14 +28,14 @@ if (!isset($_SESSION['loggedin'])) {
         <nav>
             <a class="active" href="#">Dashboard</a><!--
          --><a href="nuevo-leasing.php">Nuevo Leasing</a><!--
-         --><a href="">Configuración</a><!--
+         --><a href="configuracion.php">Configuración</a><!--
          --><a href="API/login.php?action=logout"><i class="bi bi-power"></i></a>
         </nav>
     </header>
 
     <div class="container">
         <section class="title">
-            <h2>Bienvenido, <?= $_SESSION['name'] ?></h2>
+            <h2>Bienvenido, <?= $_SESSION['nombre'] ?></h2>
             <a class="btn btn-primary" href="nuevo-leasing.php">Registrar Nuevo Leasing</a>
         </section>
 
