@@ -24,7 +24,8 @@ function loadTable() {
             { data: 'tasa_descuento' },
             { data: 'tir' },
             { data: 'tcea' },
-            { data: 'van' }
+            { data: 'van' },
+            { data: 'id_leasing' }
         ],
         "info": false,
         "searching": false,
@@ -47,6 +48,12 @@ function loadTable() {
                 targets: [4, 5, 6],
                 render: function(data, type, row) {
                     return `${data}%`;
+                }
+            },
+            {
+                targets: [8],
+                render: function(data, type, row) {
+                    return `<a class="btn btn-details" href="detalles.php?id=${data}"><i class="bi bi-three-dots"></i></a>`;
                 }
             }
          ]

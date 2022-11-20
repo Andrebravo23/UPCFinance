@@ -254,8 +254,21 @@ header > nav a:last-child {
     color: white;
 }
 
-.btn-primary:hover {
+.btn-details {
+    display: block;
+    background: var(--subtle-gray);
+    border: 1px var(--subtle-gray) solid;
+    padding: 4px 8px;
+    color: black;
+}
+
+.btn-primary:hover, .btn-details:hover {
     transform: scale(1.025) translateY(-2px);
+}
+
+.btn-details:hover {
+    background: rgb(138, 235, 138);
+    color: green;
 }
 
 .container {

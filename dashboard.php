@@ -50,6 +50,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <th>TIR</th>
                     <th>TCEA</th>
                     <th>VAN</th>
+                    <th></th>
                 </tr>
             </thead>
 
