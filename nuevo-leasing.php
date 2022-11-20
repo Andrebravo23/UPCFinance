@@ -112,22 +112,12 @@ if (!isset($_SESSION['loggedin'])) {
                         </select>
                     </div>
                 </div>
-                <div class="text-select">
-                    <label for="desembolso">Desembolso</label>
-                    <div class="input">
-                        <select class="full" name="desembolso" id="desembolso">
-                            <option value="Pagado en Efectivo">Pagado en Efectivo</option>
-                            <option value="Agregar al Préstamo">Agregar al Préstamo</option>
-                        </select>
-                    </div>
-                </div>
             </div>
             <div class="inline-input dotted">
                 <table>
                     <thead>
                         <th>Monto</th>
                         <th>Concepto</th>
-                        <th>Desembolso</th>
                         <th></th>
                     </thead>
                     <tbody id="pagos-iniciales">
@@ -286,6 +276,10 @@ if (!isset($_SESSION['loggedin'])) {
 
             </table>
         </div>
+
+        <div style="margin: 96px 0 24px;" class="btn-container">
+            <button onclick="guardarOperacion()" class="btn btn-primary">Registrar Operación</button>
+        </div>
     </section>
 
 
@@ -293,7 +287,7 @@ if (!isset($_SESSION['loggedin'])) {
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script>
         var monedaUsuario = '<?= $_SESSION['moneda'] ?>';
-        var tipoTasaUsuario = '<?= $_SESSION['tipo_tasa'] ?>'
+        var tipoTasaUsuario = '<?= $_SESSION['tipo_tasa'] ?>';
     </script>
     <script src="js/new-leasing.js"></script>
 </body>

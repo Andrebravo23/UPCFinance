@@ -41,12 +41,14 @@ if (!isset($_SESSION['loggedin'])) {
         <table id="example" class="display">
             <thead>
                 <tr>
-                    <th>Fecha de Inicio</th>
-                    <th>Descripción</th>
-                    <th>Valor del Bien</th>
-                    <th>Intereses</th>
-                    <th>Monto</th>
-                    <th>Estado</th>
+                    <th>#</th>
+                    <th>Saldo a Financiar</th>
+                    <th>Préstamo</th>
+                    <th>Total de Cuotas</th>
+                    <th>Tasa de Descuento</th>
+                    <th>TIR</th>
+                    <th>TCEA</th>
+                    <th>VAN</th>
                 </tr>
             </thead>
 

@@ -16,7 +16,7 @@ if (!isset($_SESSION['loggedin'])) {
 	exit;
 }
 
-function insert($tablename, $data)
+function insert($conn, $tablename, $data)
 {
     $columns = [];
     $values = [];
@@ -35,36 +35,46 @@ function insert($tablename, $data)
 
 // REGISTRA PRESTAMO
 $prestamo = $_POST['prestamo'];
-$id_prestamo = insert('prestamo', $prestamo);
+$id_prestamo = insert($conn, 'prestamo', $prestamo);
 
 // REGISTRA SEGUROS
 $seguros = $_POST['seguros'];
-$id_seguros = insert('seguros', $seguros);
+$id_seguros = insert($conn, 'seguros', $seguros);
 
 // REGISTRA TASA
 $tasa = $_POST['tasa'];
-$id_tasa = insert('tasa', $tasa);
+$id_tasa = insert($conn, 'tasa', $tasa);
 
 // REGISTRA TASA LEASING
 $tasaleasing = $_POST['tasaleasing'];
 $tasaleasing['id_tasa'] = $id_tasa;
-$id_tasaleasing = insert('tasaleasing', $tasaleasing);
+$id_tasaleasing = insert($conn, 'tasaleasing', $tasaleasing);
 
 // REGISTRA LEASING
 $leasing = array(
-    'id_usuario' => $_SESSION['id'],
-    'id_moneda' => $_SESSION['id_moneda'],
     'id_prestamo' => $id_prestamo,
+    'id_seguros' => $id_seguros,
     'id_tasaleasing' => $id_tasaleasing,
-    'id_seguros' => $id_seguros
+    'id_moneda' => $_SESSION['id_moneda']
 );
-$id_leasing = insert('leasing', $leasing);
+$id_leasing = insert($conn, 'leasing', $leasing);
 
 // REGISTRA TODOS LOS PAGOS INICIALES Y POR PERIODOS
 $pagosprevios = $_POST['pagosprevios'];
 foreach ($pagosprevios as $pagoprevio) {
     $pagoprevio['id_leasing'] = $id_leasing;
-    $pagoprevio['desembolso'] = $pagoprevio['desembolso'] == 'Agregar al Préstamo' ? 'PR' : 'EF';
-    insert('pagoprevio', $pagoprevio);
+    insert($conn, 'pagosprevios', $pagoprevio);
 }
+
+// REGISTRA EL RESUMEN DE LA OPERACIÓN
+$resumenleasing = $_POST['resumenleasing'];
+$resumenleasing['id_usuario'] = $_SESSION['id'];
+$resumenleasing['id_leasing'] = $id_leasing;
+insert($conn, 'resumenleasing', $resumenleasing);
+
+echo json_encode([
+    'result' => 1,
+    'message' => 'Se registró el leasing'
+]);
+
 ?>

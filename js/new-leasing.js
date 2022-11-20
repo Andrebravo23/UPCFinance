@@ -99,8 +99,7 @@ function getDataPrestamo() {
 // DATOS DE LOS PAGOS INICIALES *****************************************************************************
 const tablePagosIniciales = $('#pagos-iniciales');
 const montoPagoInicial = $('#monto');
-const conceptoPagoInicial = $('#concepto');
-const desembolsoPagoInicial = $('#desembolso');
+const conceptoPagoInicial = $('#concepto')
 let pagosIniciales = [];
 
 function agregarPagoInicial() {
@@ -111,15 +110,13 @@ function agregarPagoInicial() {
 
     let newPago = {
         "monto": parseFloat(montoPagoInicial.val()).toFixed(2),
-        "concepto": conceptoPagoInicial.val(),
-        "desembolso": desembolsoPagoInicial.val()
+        "concepto": conceptoPagoInicial.val()
     }
     pagosIniciales.push(newPago);
     let index = pagosIniciales.length - 1;
     tablePagosIniciales.append(`<tr style="display: none;" id="pago-inicial-${index}">
                                     <td>${newPago.monto}</td>
                                     <td>${newPago.concepto}</td>
-                                    <td>${newPago.desembolso}</td>
                                     <td><button onclick="eliminarPagoInicial(${index})" type="button" class="btn btn-primary"><i class="bi bi-trash"></i></button></td>
                                 </tr>`);
     console.log(pagosIniciales);
@@ -127,7 +124,6 @@ function agregarPagoInicial() {
 
     montoPagoInicial.val('');
     conceptoPagoInicial.val(conceptoPagoInicial.children("option").eq(0).val());
-    desembolsoPagoInicial.val(desembolsoPagoInicial.children("option:first").eq(0).val());
 }
 
 function eliminarPagoInicial(index) {
@@ -179,7 +175,6 @@ function getDataPagosPrevios() {
     })
     pagosPorPeriodo.forEach(pago => {
         pago.tipo = 'P';
-        pago.desembolso = 0;
     })
     return pagosIniciales.concat(pagosPorPeriodo);
 }
@@ -223,7 +218,12 @@ let resultsSummary = $('#results-summary');
 let saldo_financiar = 0;
 let monto_prestamo = 0;
 let cuotas_por_anio = 0;
-let total_cuotas = 0;
+let cuotas_total = 0;
+let tasa_descuento = 0;
+let TIR = 0;
+let TCEA = 0;
+let VAN = 0;
+
 let porcentaje_seguro_desgravamen = 0;
 let seguro_riesgo = 0;
 let amortizacion = 0;
@@ -253,15 +253,15 @@ leasingForm.on('submit', function(e) {
     saldo_financiar = prestamo['precio_venta'] - prestamo['cuota_inicial'];
     monto_prestamo = saldo_financiar + gastos_iniciales;
     cuotas_por_anio = prestamo['dias_anio'] / prestamo['frecuencia'];
-    total_cuotas = prestamo['unidad'] == 'A' ? prestamo['num_pagos'] * cuotas_por_anio : prestamo['num_pagos'];
+    cuotas_total = prestamo['unidad'] == 'A' ? prestamo['num_pagos'] * cuotas_por_anio : prestamo['num_pagos'];
     porcentaje_seguro_desgravamen = seguros['seguro_desgravamen'] * prestamo['frecuencia'] / 30;
     seguro_riesgo = -seguros['seguro_riesgo'] * prestamo['precio_venta'] / (cuotas_por_anio * 100);
-    amortizacion = -monto_prestamo / total_cuotas;
+    amortizacion = -monto_prestamo / cuotas_total;
  
     summary.push([ 'Saldo a financiar', monedaUsuario, parseFloat(saldo_financiar).toFixed(2) ]);
     summary.push([ 'Monto del préstamo', monedaUsuario, parseFloat(monto_prestamo).toFixed(2) ]);
     summary.push([ 'Nº Cuotas por Año', '-', parseFloat(cuotas_por_anio).toFixed(2) ]);
-    summary.push([ 'Nº Total de Cuotas', '-', parseFloat(total_cuotas).toFixed(2) ]);
+    summary.push([ 'Nº Total de Cuotas', '-', parseFloat(cuotas_total).toFixed(2) ]);
     summary.push([ '% de Seguro desgrav. per.', '%', parseFloat(porcentaje_seguro_desgravamen).toFixed(7) ]);
     summary.push([ 'Seguro contra todo Riesgo', monedaUsuario, parseFloat(-seguro_riesgo).toFixed(2) ]);
 
@@ -288,7 +288,7 @@ leasingForm.on('submit', function(e) {
     let total_riesgo = 0;
     let total_periodicos = 0;
 
-    for (let index = 1; index <= total_cuotas; index++) {
+    for (let index = 1; index <= cuotas_total; index++) {
         let interes = -saldo_inicial * TEP / 100;
         let seguro_desgravamen = -porcentaje_seguro_desgravamen * saldo_inicial / 100;
         let saldo_final = saldo_inicial + amortizacion;
@@ -357,11 +357,11 @@ leasingForm.on('submit', function(e) {
     summary.push([ 'Total Seguro Contra todo Riesgo', monedaUsuario, parseFloat(-total_riesgo).toFixed(2) ]);
     summary.push([ 'Total de Pagos Periódicos', monedaUsuario, parseFloat(-total_periodicos).toFixed(2) ]);
 
-    let tasa_descuento = 100 * (Math.pow(1 + tasaleasing.wacc / 100, prestamo['frecuencia'] / prestamo['dias_anio']) - 1);
+    tasa_descuento = 100 * (Math.pow(1 + tasaleasing.wacc / 100, prestamo['frecuencia'] / prestamo['dias_anio']) - 1);
     arr_flujoCaja.unshift(monto_prestamo);
-    let TIR = irr(arr_flujoCaja) * 100;
-    let TCEA = (Math.pow(1 + TIR / 100, cuotas_por_anio) - 1) * 100;
-    let VAN = npv(tasa_descuento / 100, arr_flujoCaja);
+    TIR = irr(arr_flujoCaja) * 100;
+    TCEA = (Math.pow(1 + TIR / 100, cuotas_por_anio) - 1) * 100;
+    VAN = npv(tasa_descuento / 100, arr_flujoCaja);
 
     summary.push([ 'Tasa de Descuento', '%', parseFloat(tasa_descuento).toFixed(7) ]);
     summary.push([ 'TIR de la Operación', '%', parseFloat(TIR).toFixed(7) ]);
@@ -379,7 +379,7 @@ leasingForm.on('submit', function(e) {
     } );
 })
 
-// RESULTADOS ***********************************************************************************************
+// MOSTRAR RESULTADOS ***************************************************************************************
 let resultSelected = 0;
 let showSummaryBtn = $('#show-summary');
 let showTableBtn = $('#show-table');
@@ -406,4 +406,42 @@ function toggleSummary() {
             resultSelected = 0;
         })
     }
+}
+
+// ENVIO AL SERVIDOR
+function getDataResumen() {
+    return {
+        'saldo_financiar': saldo_financiar,
+        'monto_prestamo': monto_prestamo,
+        'cuotas_anio': cuotas_por_anio,
+        'cuotas_total': cuotas_total,
+        'tasa_descuento': tasa_descuento,
+        'tir': TIR,
+        'tcea': TCEA,
+        'van': VAN
+    }
+}
+
+function getAllData() {
+    let tasa_aux = getDataTasa(); 
+    return {
+        'prestamo': getDataPrestamo(),
+        'pagosprevios': getDataPagosPrevios(),
+        'seguros': getDataSeguros(),
+        'tasaleasing': tasa_aux.tasaleasing,
+        'tasa': tasa_aux.tasa,
+        'resumenleasing': getDataResumen()
+    }
+}
+
+function guardarOperacion() {
+    $.ajax({
+        type: "POST",
+        url: "./API/add-leasing.php",
+        data: getAllData(),
+        dataType: "json",
+        success: function (response) {
+            console.log(response);
+        }
+    });
 }
