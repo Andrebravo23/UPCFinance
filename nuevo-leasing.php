@@ -123,6 +123,7 @@ if (!isset($_SESSION['loggedin'])) {
                         <label for="tasa-leasing">Tasa Efectiva Anual</label>
                         <div class="input">
                             <input id="tasa-leasing" name="tasa-leasing" type="text" required>
+                            <i class="bi bi-percent"></i>
                         </div>
                     </div>
                     <input type="hidden" name="capitalizacion" id="capitalizacion" value="">
@@ -191,6 +192,7 @@ if (!isset($_SESSION['loggedin'])) {
                     <label for="seg-riesgo">Seguro de Riesgo</label>
                     <div class="input">
                         <input id="seg-riesgo" name="seg-riesgo" type="text" required>
+                        <i class="bi bi-percent"></i>
                         <select name="seg-riesgo-frec" id="seg-riesgo-frec">
                             <option value="1">DIARIO</option>
                             <option value="15">QUINCENAL</option>

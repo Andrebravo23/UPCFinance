@@ -79,7 +79,7 @@ function getDataPagosPorcentuales(CI) {
     return {
         'activacion': parseFloat(AC).toFixed(7),
         'seguro_riesgo': parseFloat(segRiesgo.val()).toFixed(7),
-        'frec_seguro': parseInt(segRiesgo.val()),
+        'frec_seguro': parseInt(segRiesgoFrec.val()),
         'impVenta': parseFloat(impuestoVenta.val()).toFixed(7),
         'impRenta': parseFloat(impuestoRenta.val()).toFixed(7)
     };
