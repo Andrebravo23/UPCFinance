@@ -40,8 +40,8 @@ if (!isset($_SESSION['loggedin'])) {
                 <div class="custom-input">
                     <i class="bi bi-envelope"></i>
                     <div>
-                        <label for="email">Ingresar Correo</label>
-                        <input type="email" name="email" id="email" autocomplete="off" value="<?=$_SESSION['correo']?>" required>
+                        <label for="email">Correo</label>
+                        <input type="email" name="email" id="email" autocomplete="off" value="<?=$_SESSION['correo']?>" disabled>
                     </div>
                 </div>
                 <div class="custom-input">
@@ -64,21 +64,21 @@ if (!isset($_SESSION['loggedin'])) {
                     <i class="bi bi-lock"></i>
                     <div>
                         <label for="current-password">Ingresar Contraseña</label>
-                        <input type="password" name="current-password" id="current-password" autocomplete="off" required>
+                        <input type="password" name="current-password" id="current-password" autocomplete="off">
                     </div>
                 </div>
                 <div class="custom-input">
                     <i class="bi bi-lock"></i>
                     <div>
                         <label for="new-password">Ingresar Nueva Contraseña</label>
-                        <input type="password" name="new-password" id="new-password" autocomplete="off" required>
+                        <input type="password" name="new-password" id="new-password" autocomplete="off">
                     </div>
                 </div>
                 <div class="custom-input">
                     <i class="bi bi-lock"></i>
                     <div>
                         <label for="new-password-repeat">Repetir Nueva Contraseña</label>
-                        <input type="password" name="new-password-repeat" id="new-password-repeat" autocomplete="off" required>
+                        <input type="password" name="new-password-repeat" id="new-password-repeat" autocomplete="off">
                     </div>
                 </div>
             </section>
@@ -87,17 +87,17 @@ if (!isset($_SESSION['loggedin'])) {
             </section>
             <section class="inline-input">
                 <div class="custom-input">
-                    <i class="bi bi-envelope"></i>
+                    <i class="bi bi-coin"></i>
                     <div>
                         <label for="moneda">Seleccionar Moneda</label>
                         <select name="moneda" id="moneda">
-                            <option value="PEN" <?php if ($_SESSION['moneda'] == 'PEN') echo 'selected'; ?>>Sol Peruano (PEN)</option>
-                            <option value="USD" <?php if ($_SESSION['moneda'] == 'USD') echo 'selected'; ?>>Dólar Americano (USD)</option>
+                            <option value="1" <?php if ($_SESSION['moneda'] == 'PEN') echo 'selected'; ?>>Sol Peruano (PEN)</option>
+                            <option value="2" <?php if ($_SESSION['moneda'] == 'USD') echo 'selected'; ?>>Dólar Americano (USD)</option>
                         </select>
                     </div>
                 </div>
                 <div class="custom-input">
-                    <i class="bi bi-envelope"></i>
+                    <i class="bi bi-graph-up-arrow"></i>
                     <div>
                         <label for="tipo_tasa">Seleccionar Tipo de Tasa</label>
                         <select name="tipo_tasa" id="tipo_tasa">
@@ -108,9 +108,17 @@ if (!isset($_SESSION['loggedin'])) {
                 </div>
             </section>
             <div style="margin: 24px 0 24px;" class="btn-container">
-                <button style="margin: 0 0 0 auto" class="btn btn-primary" disabled>Guardar cambios</button>
+                <button onclick="guardarCambios()" style="margin: 0 0 0 auto" class="btn btn-primary">Guardar cambios</button>
             </div>
         </form>
     </div>
+
+    <div style="display: none;" id="nots" class="">
+        <i class=""></i>
+        <span></span>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+    <script src="js/hb-simple-nots.js"></script>
+    <script src="js/configuration.js"></script>
 </body>
 </html>

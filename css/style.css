@@ -3,8 +3,8 @@
     --gray: rgb(128 ,128 ,128);
     --light-gray: rgba(0, 0, 0, 0.1);
     --subtle-gray: rgb(240, 240, 240);
-    --success: rgba(44, 216, 44, 0.8);
-    --danger: rgb(255, 59, 59, 0.8);
+    --success: rgba(21, 180, 21, 0.95);
+    --danger: rgb(255, 59, 59, 0.95);
 }
 
 * {

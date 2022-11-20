@@ -38,16 +38,15 @@ function loadTable() {
         },
         "columnDefs": [
             { 
-                targets: [5],
+                targets: [ 1, 2, 7 ],
                 render: function(data, type, row) {
-                    let tagClass = data == 'Pendiente' ? 'pending' : 'done';
-                    return `<span class="tag ${tagClass}">${data}</span>`;
+                    return `${data} ${row.moneda}`;
                 }     
             },
             {
-                targets: [1],
+                targets: [4, 5, 6],
                 render: function(data, type, row) {
-                    return `<span style="color: var(--gray);">${data}</span>`;
+                    return `${data}%`;
                 }
             }
          ]

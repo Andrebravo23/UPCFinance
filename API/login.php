@@ -84,6 +84,7 @@ switch($method) {
                 $_SESSION['nombre'] = $usuario['nombres'];
                 $_SESSION['apellido'] = $usuario['apellidos'];
                 $_SESSION['id'] = $usuario['id'];
+                $_SESSION['id_configuracion'] = $usuario['id_configuracion'];
                 
                 $sql = "SELECT id_moneda, tipo_tasa FROM configuracion WHERE id = '".$usuario['id_configuracion']."'";
                 $stmt = $conn->prepare($sql);

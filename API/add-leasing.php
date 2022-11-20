@@ -68,10 +68,12 @@ $leasing = array(
 $id_leasing = insert($conn, 'leasing', $leasing);
 
 // REGISTRA TODOS LOS PAGOS INICIALES Y POR PERIODOS
-$pagosprevios = $_POST['pagosprevios'];
-foreach ($pagosprevios as $pagoprevio) {
-    $pagoprevio['id_leasing'] = $id_leasing;
-    insert($conn, 'pagosprevios', $pagoprevio);
+if (array_key_exists('pagosprevios', $_POST)) {
+    $pagosprevios = $_POST['pagosprevios'];
+    foreach ($pagosprevios as $pagoprevio) {
+        $pagoprevio['id_leasing'] = $id_leasing;
+        insert($conn, 'pagosprevios', $pagoprevio);
+    }
 }
 
 // REGISTRA EL RESUMEN DE LA OPERACIÓN
