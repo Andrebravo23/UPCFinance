@@ -195,30 +195,60 @@ leasingForm.on('submit', function(e) {
         results.fadeIn('fast');
     });
 
+    let allFees = [];
     let saldo_inicial = monto_prestamo;
     for (let index = 1; index <= total_cuotas; index++) {
         let interes = -saldo_inicial * TEP / 100;
         let seguro_desgravamen = -porcentaje_seguro_desgravamen * saldo_inicial / 100;
         let saldo_final = saldo_inicial + amortizacion;
         let cuota = interes + amortizacion + seguro_desgravamen;
-        let flujo = cuota + seguro_desgravamen + seguro_riesgo + gastos_periodicos;
-        feesTable.append(
-                        `<tr>
-                            <td>${index}</td>
-                            <td>${TEA}%</td>
-                            <td>${TEP}%</td>
-                            <td>${saldo_inicial.toFixed(2)}</td>
-                            <td>${interes.toFixed(2)}</td>
-                            <td>${cuota.toFixed(2)}</td>
-                            <td>${amortizacion.toFixed(2)}</td>
-                            <td>${seguro_desgravamen.toFixed(2)}</td>
-                            <td>${seguro_riesgo.toFixed(2)}</td>
-                            <td>${gastos_periodicos.toFixed(2)}</td>
-                            <td>${saldo_final.toFixed(2)}</td>
-                            <td>${flujo.toFixed(2)}</td>
-                        </tr>`);
+        let flujo = cuota + seguro_riesgo + gastos_periodicos;
+
+        let newFee = [
+            index,
+            TEA + '%',
+            TEP + '%',
+            saldo_inicial.toFixed(2),
+            interes.toFixed(2),
+            cuota.toFixed(2),
+            amortizacion.toFixed(2),
+            seguro_desgravamen.toFixed(2),
+            seguro_riesgo.toFixed(2),
+            gastos_periodicos.toFixed(2),
+            saldo_final.toFixed(2),
+            flujo.toFixed(2)
+        ];
+        
+        allFees.push(newFee);
         saldo_inicial = saldo_final;
     }
-    console.log(result);
+    
+    feesTable.DataTable( {
+        "data": allFees,
+        "info": false,
+        "searching": false,
+        "lengthChange": false,
+        "stripeClasses": [],
+        "language": {
+            "paginate": {
+                "previous": '<i class="bi bi-chevron-left"></i>',
+                "next": '<i class="bi bi-chevron-right"></i>'
+            }
+        },
+        "columnDefs": [
+            { 
+                targets: [ 4, 5, 6, 7, 8, 9, 11 ],
+                render: function(data, type, row) {
+                    return `<span class="negative">${data}</span>`;
+                }
+            },
+            {
+                targets: [10],
+                render: function(data, type, row) {
+                    return `<span class="positive">${data}</span>`;
+                }
+            }
+         ]
+    } );
     
 })

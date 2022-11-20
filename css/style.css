@@ -309,6 +309,10 @@ table.dataTable.no-footer {
     border: none;
 }
 
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background-color: var(--primary);
+}
+
 .dataTables_wrapper .dataTables_paginate .paginate_button.current,
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
     font-size: 14px;
@@ -334,6 +338,35 @@ table.dataTable.no-footer {
 .tag.done {
     color: var(--success);
     background: rgb(224, 255, 224);
+}
+
+.negative {
+    color: red;
+    background: #ffe4e4;
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+.positive {
+    color: green;
+    background: rgb(217, 255, 217);
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
+.results-container {
+    margin-bottom: 64px;
+}
+
+.results-container h3 {
+    margin: 48px 0 0 48px;
+}
+
+.results-container .dataTables_paginate.paging_simple_numbers {
+    display: block;
+    float: none;
+    width: fit-content;
+    margin: 0 auto;
 }
 
 #nots {

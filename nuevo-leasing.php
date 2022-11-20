@@ -247,31 +247,25 @@ if (!isset($_SESSION['loggedin'])) {
         </div>
     </form>
 
-    <section style="display: none;" id="results" class="container max">
-        <div class="leasing-group">
-            <h3>Resultados</h3>
-            <div class="inline-input">
-                <table>
-                    <thead>
-                        <th>N°</th>
-                        <th>TEA</th>
-                        <th>TEP</th>
-                        <th>Saldo Inicial</th>
-                        <th>Interés</th>
-                        <th>Cuota</th>
-                        <th>Amortización</th>
-                        <th>Seg. Desgravamen</th>
-                        <th>Seg. Riesgo</th>
-                        <th>Gastos Periódicos</th>
-                        <th>Saldo Final</th>
-                        <th>Flujo</th>
-                    </thead>
-                    <tbody id="fees-table">
+    <section style="display: none" id="results" class="results-container">
+        <h3>Resultados de la Operación:</h3>
+        <table id="fees-table" class="display">
+            <thead>
+                <th>N°</th>
+                <th>TEA</th>
+                <th>TEP</th>
+                <th>Saldo Inicial</th>
+                <th>Interés</th>
+                <th>Cuota</th>
+                <th>Amortización</th>
+                <th>Seg. Desgravamen</th>
+                <th>Seg. Riesgo</th>
+                <th>Gastos Periódicos</th>
+                <th>Saldo Final</th>
+                <th>Flujo</th>
+            </thead>
                     
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        </table>
     </section>
 
 
