@@ -256,32 +256,36 @@ if (!isset($_SESSION['loggedin'])) {
             </div>
         </div>
 
-        <table id="results-summary" class="display">
-            <thead>
-                <th>Descripción</th>
-                <th>Unidad</th>
-                <th>Monto</th>
-            </thead>
+        <div id="summary">
+            <table style="width: 100%" id="results-summary" class="display">
+                <thead>
+                    <th>Descripción</th>
+                    <th>Unidad</th>
+                    <th>Monto</th>
+                </thead>
 
-        </table>
+            </table>
+        </div>
 
-        <table style="display:none" id="fees-table" class="display">
-            <thead>
-                <th>N°</th>
-                <th>TEA</th>
-                <th>TEP</th>
-                <th>Saldo Inicial</th>
-                <th>Interés</th>
-                <th>Cuota</th>
-                <th>Amortización</th>
-                <th>Seg. Desgravamen</th>
-                <th>Seg. Riesgo</th>
-                <th>Gastos Periódicos</th>
-                <th>Saldo Final</th>
-                <th>Flujo</th>
-            </thead>
-                    
-        </table>
+        <div id="fees" style="display:none">
+            <table id="fees-table" class="display">
+                <thead>
+                    <th>N°</th>
+                    <th>TEA</th>
+                    <th>TEP</th>
+                    <th>Saldo Inicial</th>
+                    <th>Interés</th>
+                    <th>Cuota</th>
+                    <th>Amortización</th>
+                    <th>Seg. Desgravamen</th>
+                    <th>Seg. Riesgo</th>
+                    <th>Gastos Periódicos</th>
+                    <th>Saldo Final</th>
+                    <th>Flujo</th>
+                </thead>
+
+            </table>
+        </div>
     </section>
 
 

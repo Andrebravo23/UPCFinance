@@ -398,6 +398,25 @@ table.dataTable.no-footer {
     color: gray;
 }
 
+#fees table.dataTable, #fees-table {
+    margin: 0;
+}
+
+#fees .dataTables_scrollHeadInner {
+    margin: 0 auto;
+}
+
+#fees .dataTables_scrollHeadInner .dataTable.no-footer {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#fees #fees-table.dataTable.no-footer {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    margin: 0 auto;
+}
+
 #nots {
     display: block;
     position: fixed;

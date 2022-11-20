@@ -1,3 +1,68 @@
+// FORMULAS FINANCIERAS **************************************************************************************
+function _irrResult (values, dates, rate) {
+    const r = rate + 1
+    let result = values[0]
+    for (let i = 1; i < values.length; i++) {
+      result += values[i] / Math.pow(r, (dates[i] - dates[0]) / 365)
+    }
+    return result
+}
+
+function _irrResultDeriv (values, dates, rate) {
+    const r = rate + 1
+    let result = 0
+    for (let i = 1; i < values.length; i++) {
+      const frac = (dates[i] - dates[0]) / 365
+      result -= frac * values[i] / Math.pow(r, frac + 1)
+    }
+    return result
+}
+
+function irr (values, guess = 0.1, tol = 1e-6, maxIter = 1000) {
+    const dates = []
+    let positive = false
+    let negative = false
+    for (let i = 0; i < values.length; i++) {
+      dates[i] = (i === 0) ? 0 : dates[i - 1] + 365
+      if (values[i] > 0) {
+        positive = true
+      }
+      if (values[i] < 0) {
+        negative = true
+      }
+    }
+
+    if (!positive || !negative) {
+      return Number.NaN
+    }
+  
+    let resultRate = guess
+    let newRate, epsRate, resultValue
+    let iteration = 0
+    let contLoop = true
+
+    do {
+      resultValue = _irrResult(values, dates, resultRate)
+      newRate = resultRate - resultValue / _irrResultDeriv(values, dates, resultRate)
+      epsRate = Math.abs(newRate - resultRate)
+      resultRate = newRate
+      contLoop = (epsRate > tol) && (Math.abs(resultValue) > tol)
+    } while (contLoop && (++iteration < maxIter))
+  
+    if (contLoop) {
+      return Number.NaN
+    }
+  
+    return resultRate
+}
+
+function npv (rate, values) {
+    return values.reduce(
+      (acc, curr, i) => acc + (curr / (1 + rate) ** i),
+      0
+    )
+}
+
 // UTILITARIOS ***********************************************************************************************
 function ajustaTipoCambio(moneda, monto) {
     if (moneda != monedaUsuario) {
@@ -153,6 +218,16 @@ function getDataTasa() {
 let leasingForm = $('#leasing-form');
 let results = $('#results');
 let feesTable = $('#fees-table');
+let resultsSummary = $('#results-summary');
+
+let saldo_financiar = 0;
+let monto_prestamo = 0;
+let cuotas_por_anio = 0;
+let total_cuotas = 0;
+let porcentaje_seguro_desgravamen = 0;
+let seguro_riesgo = 0;
+let amortizacion = 0;
+let arr_flujoCaja = [];
 
 leasingForm.on('submit', function(e) {
     e.preventDefault();
@@ -175,13 +250,20 @@ leasingForm.on('submit', function(e) {
         }
     });
 
-    let saldo_financiar = prestamo['precio_venta'] - prestamo['cuota_inicial'];
-    let monto_prestamo = saldo_financiar + gastos_iniciales;
-    let cuotas_por_anio = prestamo['dias_anio'] / prestamo['frecuencia'];
-    let total_cuotas = prestamo['unidad'] == 'A' ? prestamo['num_pagos'] * cuotas_por_anio : prestamo['num_pagos'];
-    let porcentaje_seguro_desgravamen = seguros['seguro_desgravamen'] * prestamo['frecuencia'] / 30;
-    let seguro_riesgo = -seguros['seguro_riesgo'] * prestamo['precio_venta'] / (cuotas_por_anio * 100);
-    let amortizacion = -monto_prestamo / total_cuotas;
+    saldo_financiar = prestamo['precio_venta'] - prestamo['cuota_inicial'];
+    monto_prestamo = saldo_financiar + gastos_iniciales;
+    cuotas_por_anio = prestamo['dias_anio'] / prestamo['frecuencia'];
+    total_cuotas = prestamo['unidad'] == 'A' ? prestamo['num_pagos'] * cuotas_por_anio : prestamo['num_pagos'];
+    porcentaje_seguro_desgravamen = seguros['seguro_desgravamen'] * prestamo['frecuencia'] / 30;
+    seguro_riesgo = -seguros['seguro_riesgo'] * prestamo['precio_venta'] / (cuotas_por_anio * 100);
+    amortizacion = -monto_prestamo / total_cuotas;
+ 
+    summary.push([ 'Saldo a financiar', monedaUsuario, parseFloat(saldo_financiar).toFixed(2) ]);
+    summary.push([ 'Monto del préstamo', monedaUsuario, parseFloat(monto_prestamo).toFixed(2) ]);
+    summary.push([ 'Nº Cuotas por Año', '-', parseFloat(cuotas_por_anio).toFixed(2) ]);
+    summary.push([ 'Nº Total de Cuotas', '-', parseFloat(total_cuotas).toFixed(2) ]);
+    summary.push([ '% de Seguro desgrav. per.', '%', parseFloat(porcentaje_seguro_desgravamen).toFixed(7) ]);
+    summary.push([ 'Seguro contra todo Riesgo', monedaUsuario, parseFloat(-seguro_riesgo).toFixed(2) ]);
 
     let TEA = 0;
     if (tasa['tipo_tasa'] == 'E') {
@@ -212,6 +294,8 @@ leasingForm.on('submit', function(e) {
         let saldo_final = saldo_inicial + amortizacion;
         let cuota = interes + amortizacion + seguro_desgravamen;
         let flujo = cuota + seguro_riesgo + gastos_periodicos;
+
+        arr_flujoCaja.push(flujo);
 
         total_intereses += interes;
         total_amortizacion += amortizacion;
@@ -266,20 +350,23 @@ leasingForm.on('submit', function(e) {
             }
          ]
     } );
-
-    summary.push([ 'Saldo a financiar', monedaUsuario, parseFloat(saldo_financiar).toFixed(2) ]);
-    summary.push([ 'Monto del préstamo', monedaUsuario, parseFloat(monto_prestamo).toFixed(2) ]);
-    summary.push([ 'Nº Cuotas por Año', '-', parseFloat(cuotas_por_anio).toFixed(2) ]);
-    summary.push([ 'Nº Total de Cuotas', '-', parseFloat(total_cuotas).toFixed(2) ]);
-
-    summary.push([ '% de Seguro desgrav. per.', '%', parseFloat(porcentaje_seguro_desgravamen).toFixed(7) ]);
-    summary.push([ 'Seguro Riesgo', monedaUsuario, parseFloat(-seguro_riesgo).toFixed(2) ]);
     
-    summary.push([ 'Intereses', monedaUsuario, parseFloat(-total_intereses).toFixed(2) ]);
-    summary.push([ 'Amortización del Capital', monedaUsuario, parseFloat(-total_amortizacion).toFixed(2) ]);
-    summary.push([ 'Seguro de desgravamen', monedaUsuario, parseFloat(-total_desgravamen).toFixed(2) ]);
-    summary.push([ 'Seguro contra todo Riesgo', monedaUsuario, parseFloat(-total_riesgo).toFixed(2) ]);
-    summary.push([ 'Pagos Periódicos', monedaUsuario, parseFloat(-total_periodicos).toFixed(2) ]);
+    summary.push([ 'Total de Intereses', monedaUsuario, parseFloat(-total_intereses).toFixed(2) ]);
+    summary.push([ 'Amortización Total del Capital', monedaUsuario, parseFloat(-total_amortizacion).toFixed(2) ]);
+    summary.push([ 'Total Seguro de desgravamen', monedaUsuario, parseFloat(-total_desgravamen).toFixed(2) ]);
+    summary.push([ 'Total Seguro Contra todo Riesgo', monedaUsuario, parseFloat(-total_riesgo).toFixed(2) ]);
+    summary.push([ 'Total de Pagos Periódicos', monedaUsuario, parseFloat(-total_periodicos).toFixed(2) ]);
+
+    let tasa_descuento = 100 * (Math.pow(1 + tasaleasing.wacc / 100, prestamo['frecuencia'] / prestamo['dias_anio']) - 1);
+    arr_flujoCaja.unshift(monto_prestamo);
+    let TIR = irr(arr_flujoCaja) * 100;
+    let TCEA = (Math.pow(1 + TIR / 100, cuotas_por_anio) - 1) * 100;
+    let VAN = npv(tasa_descuento / 100, arr_flujoCaja);
+
+    summary.push([ 'Tasa de Descuento', '%', parseFloat(tasa_descuento).toFixed(7) ]);
+    summary.push([ 'TIR de la Operación', '%', parseFloat(TIR).toFixed(7) ]);
+    summary.push([ 'TCEA de la Operación', '%', parseFloat(TCEA).toFixed(7) ]);
+    summary.push([ 'VAN de la Operación', monedaUsuario, parseFloat(VAN).toFixed(2) ]);
 
     resultsSummary.DataTable( {
         "data": summary,
@@ -288,22 +375,7 @@ leasingForm.on('submit', function(e) {
         "lengthChange": false,
         "ordering": false,
         "paging": false,
-        "scrollX": true,
-        "stripeClasses": [],
-        "columnDefs": [/* 
-            { 
-                targets: [ 4, 5, 6, 7, 8, 9, 11 ],
-                render: function(data, type, row) {
-                    return `<span class="negative">${data}</span>`;
-                }
-            },
-            {
-                targets: [10],
-                render: function(data, type, row) {
-                    return `<span class="positive">${data}</span>`;
-                }
-            } */
-         ]
+        "stripeClasses": []
     } );
 })
 
@@ -311,19 +383,26 @@ leasingForm.on('submit', function(e) {
 let resultSelected = 0;
 let showSummaryBtn = $('#show-summary');
 let showTableBtn = $('#show-table');
-let resultsSummary = $('#results-summary');
+let summaryContainer = $('#summary');
+let feesContainer = $('#fees');
+let rendered = false;
 
 function toggleSummary() {
     showSummaryBtn.toggleClass('disabled');
     showTableBtn.toggleClass('disabled');
     if (resultSelected == 0) {
-        resultsSummary.fadeOut('fast', function(){
-            feesTable.fadeIn('fast');
+        summaryContainer.fadeOut('fast', function(){
+            feesContainer.fadeIn('fast', function(){
+                if (!rendered) {
+                    feesTable.DataTable().rows().invalidate('data').draw(false);
+                    rendered = true;
+                }
+            });
             resultSelected = 1;
         })
     } else {
-        feesTable.fadeOut('fast', function(){
-            resultsSummary.fadeIn('fast');
+        feesContainer.fadeOut('fast', function(){
+            summaryContainer.fadeIn('fast');
             resultSelected = 0;
         })
     }
