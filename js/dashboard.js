@@ -35,7 +35,8 @@ function loadTable() {
             "paginate": {
                 "previous": '<i class="bi bi-chevron-left"></i>',
                 "next": '<i class="bi bi-chevron-right"></i>'
-            }
+            },
+            "emptyTable": 'Aún no has registrado nada'
         },
         "columnDefs": [
             { 

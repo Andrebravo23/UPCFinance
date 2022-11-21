@@ -71,7 +71,7 @@ $allData = json_encode([
 
     <section id="results" class="results-container">
         <div class="results-menu">
-            <h3>Resultados de la Operación:</h3>
+            <h3>Detalles de la Operación:</h3>
             <div class="results-btns">
                 <button onclick="toggleSummary()" id="show-summary" class="btn btn-primary">Resumen</button><!--
              --><button onclick="toggleSummary()" id="show-table" class="btn btn-primary disabled">Flujo</button>

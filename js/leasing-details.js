@@ -171,12 +171,13 @@ function toggleSummary() {
     showTableBtn.toggleClass('disabled');
     if (resultSelected == 0) {
         summaryContainer.fadeOut('fast', function(){
-            feesContainer.fadeIn('fast', function(){
+            feesContainer.fadeIn('fast');
+            setTimeout(() => {
                 if (!rendered) {
                     feesTable.DataTable().rows().invalidate('data').draw(false);
                     rendered = true;
                 }
-            });
+            }, 10);
             resultSelected = 1;
         })
     } else {
