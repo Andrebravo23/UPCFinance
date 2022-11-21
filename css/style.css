@@ -311,7 +311,11 @@ table.dataTable tbody tr td  {
 table.dataTable.no-footer {
     border-radius: 8px;
     border: 1px solid var(--light-gray);
-    border-bottom: 8px solid var(--light-gray);
+    border-bottom: 8px solid var(--light-gray) !important;
+}
+
+.dataTables_scrollHeadInner table.dataTable.no-footer, .dataTables_scrollBody {
+    border-bottom: none !important;
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button,
