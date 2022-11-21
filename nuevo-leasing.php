@@ -295,6 +295,7 @@ if (!isset($_SESSION['loggedin'])) {
     </script>
     <script src="js/hb-simple-nots.js"></script>
     <script src="js/finance.js"></script>
+    <script src="js/leasing-details.js"></script>
     <script src="js/new-leasing.js"></script>
 </body>
 </html>
